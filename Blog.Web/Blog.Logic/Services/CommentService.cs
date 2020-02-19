@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Logic.Services
+namespace Blog.Data.Entities.Services
 {
     public class CommentService
     {
@@ -38,6 +38,11 @@ namespace Blog.Logic.Services
         public List<Comment> GetAll()
         {
             return _comment.GetAll();
+        }
+
+        public void Update(Comment comment)
+        {
+            _comment.Update(comment);
         }
 
         public void Delete(int id)

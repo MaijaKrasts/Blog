@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Helpers;
 
-namespace Blog.Logic.Services
+namespace Blog.Data.Entities.Services
 {
     public class UserService
     {
@@ -25,6 +25,11 @@ namespace Blog.Logic.Services
         public List<User> GetAll()
         {
             return _user.GetAll();
+        }
+
+        public void Update(User user)
+        {
+            _user.Update(user);
         }
         public User GetByEmailAndPassword(string email, string password)
         {

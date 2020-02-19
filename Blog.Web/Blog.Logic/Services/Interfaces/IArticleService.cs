@@ -1,10 +1,14 @@
 ﻿using Blog.Data.Entities;
 using System.Collections.Generic;
 
-namespace Blog.Logic.Services.Interfaces
+namespace Blog.Data.Entities.Services.Interfaces
 {
     public interface IArticleService
     {
+        Article Get(int id);
+        List<Article> GetAll();
+
+        void Update(Article article);
         List<Article> GetAllByDate();
         List<Article> GetNumOf(int num);
         List<Article> GetHighestRated(int num);

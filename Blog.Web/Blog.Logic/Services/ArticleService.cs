@@ -1,12 +1,12 @@
 ﻿using Blog.Data.Entities;
 using Blog.Data.Repositories.Interfaces;
-using Blog.Logic.Services.Interfaces;
+using Blog.Data.Entities.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Blog.Logic.Services
+namespace Blog.Data.Entities.Services
 {
-    public class ArticleService
+    public class ArticleService :IArticleService
     {
         private IArticleRepository _article;
         private ICommentService _commentService;
@@ -25,6 +25,11 @@ namespace Blog.Logic.Services
         public Article Get(int id)
         {
             return _article.Get(id);
+        }
+
+        public void Update(Article article)
+        {
+           _article.Update(article);
         }
         public List<Article> GetAllByDate()
         {

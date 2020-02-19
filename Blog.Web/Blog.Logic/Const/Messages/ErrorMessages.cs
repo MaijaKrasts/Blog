@@ -1,4 +1,4 @@
-﻿namespace Blog.Logic.Const.Messages
+﻿namespace Blog.Data.Entities.Const.Messages
 {
     public class ErrorMessages
     {   public const string UploadError = "Upload failed. Try again (use .jpg, .gif or .png files up to 2MB in size)!";

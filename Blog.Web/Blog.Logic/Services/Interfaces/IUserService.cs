@@ -1,12 +1,14 @@
 ﻿using Blog.Data.Entities;
 using System.Collections.Generic;
 
-namespace Blog.Logic.Services.Interfaces
+namespace Blog.Data.Entities.Services.Interfaces
 {
     public interface IUserService
     {
         User Get(int id);
         List<User> GetAll();
+
+        void Update(User user);
         User GetByEmailAndPassword(string email, string password);
         User GetByEmail(string email);
         List<User> GetAllCommenting();
