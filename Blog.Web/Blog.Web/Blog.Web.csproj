@@ -180,6 +180,16 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Blog.Data\Blog.Data.csproj">
+      <Project>{10d65dff-0f08-4452-9e46-4496d48754fa}</Project>
+      <Name>Blog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Blog.Logic\Blog.Logic.csproj">
+      <Project>{e20e8a7a-309f-4fbe-9215-3c2ad2b1a2b2}</Project>
+      <Name>Blog.Logic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
