@@ -41,7 +41,14 @@ namespace Blog.Web.Controllers
 
                     Session.Add("userId", user.Id);
                     Session.Add("userName", user.Name);
-                    Session.Add("userRole", user.Role);
+                    if(user.Role == 1)
+                    {
+                        Session.Add("userRole", user.Role);
+                    }
+                    else
+                    {
+                        Session.Add("userRole", null);
+                    }
                     TempData["message"] = ErrorMessages.AccountCreated;
                     return RedirectToAction("Index", "Home");
                 }

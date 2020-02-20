@@ -16,7 +16,7 @@
                         @article.Title
                     </h4>
                     <p>@article.Intro</p>
-                    <a>@Html.ActionLink("Read more", "Single", "Article", new { articleId = article.Id, userId = Session["userId"] })</a>               
+                    <a>@Html.ActionLink("Read more", "Single", "Article", new { articleId = article.Id, userId = Session["userId"]}, null)</a>               
         </div>
 
     }

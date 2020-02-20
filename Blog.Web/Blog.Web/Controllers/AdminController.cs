@@ -17,7 +17,7 @@ namespace Blog.Web.Controllers
             _model = model;
         }
 
-        public ActionResult Index()
+        public ActionResult AdminIndex()
         {
             var model = _model.CreateAdminModel();
             return View(model);

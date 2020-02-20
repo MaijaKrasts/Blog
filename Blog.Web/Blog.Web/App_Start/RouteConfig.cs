@@ -18,6 +18,12 @@ namespace Blog.Web
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+               name: "Article",
+               url: "{controller}/{action}/{articleId}/{userId}",
+               defaults: new { controller = "Action", action = "Single", userId = UrlParameter.Optional }
+           );
         }
     }
 }
