@@ -26,6 +26,8 @@ namespace Blog.Web.DependencyResolution {
             Scan(
                 scan => {
                     scan.TheCallingAssembly();
+                    scan.Assembly("Blog.Data");
+                    scan.Assembly("Blog.Logic");
                     scan.WithDefaultConventions();
 					scan.With(new ControllerConvention());
                 });

@@ -8,6 +8,7 @@ namespace Blog.Data.Entities.Services.Interfaces
         Article Get(int id);
         List<Article> GetAll();
 
+        Article Create(Article article);
         void Update(Article article);
         List<Article> GetAllByDate();
         List<Article> GetNumOf(int num);

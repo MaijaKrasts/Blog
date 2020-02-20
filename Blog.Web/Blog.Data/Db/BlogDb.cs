@@ -5,7 +5,7 @@ namespace Blog.Data.Db
 {
     public class BlogDb : DbContext
     {
-        public BlogDb(DbContext)
+        public BlogDb(DbContext options)
             : base()
         {
 

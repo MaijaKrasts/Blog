@@ -21,11 +21,29 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Articles", "AllArticles", "Article")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+                    @if (Session["userId"] != null)
+                    {
+                        <li>@Html.ActionLink("My articles", "MyArticles", "Article", new { Id = Session["userId"] }, null)</li>
+                        <li>@Html.ActionLink("My profile", "Profile", "User", new { Id = Session["userId"] }, null)</li>
+                        <li>@Html.ActionLink("Sign out", "SignOut", "User")</li>
+                        if (Session["userRole"] != null)
+                        {
+                            <li>@Html.ActionLink("Admin panel", "AdminIndex", "Admin")</li>
+                        }
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Sign in", "SignIn", "User")</li>
+                        <li>@Html.ActionLink("Sign up", "SignUp", "User")</li>
+                    }
+
                 </ul>
             </div>
         </div>
+        <a href="~/Views/Shared/_Layout.cshtml">~/Views/Shared/_Layout.cshtml</a>
     </div>
     <div class="container body-content">
         @RenderBody()

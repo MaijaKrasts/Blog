@@ -1,0 +1,47 @@
+﻿@model Blog.Data.Entities.User
+@{
+    ViewBag.Title = "Profile";
+}
+<div class="container emp-profile">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <img src="@Model.Picture" alt="" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+                    <h5>
+                        @Model.Name
+                    </h5>
+                </div>
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.Name</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@Model.Email</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a class="btn btn-light" asp-controller="User" asp-action="EditProfile" asp-route-Id="@Model.Id" value="">Edit Profile</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+

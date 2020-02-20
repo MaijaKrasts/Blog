@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "AdminIndex";
+}
+
+<h1>Welcome to the admin panel</h1>
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <fieldset>
+            <legend><small><b>Grant writing option</b></small></legend>
+            <input type="text" id="emailWrite" placeholder="User email" />
+            <input type="button" value="Grant" id="buttonWrite" />
+            <br />
+        </fieldset>
+    </div>
+    <div class="col-md-3">
+        <fieldset>
+            <legend><small><b>Grant commenting option</b></small></legend>
+            <input type="text" id="emailComment" placeholder="User email" />
+            <input type="button" value="Grant" id="buttonComment" />
+            <br />
+        </fieldset>
+    </div>
+    <div class="col-md-3">
+        <fieldset>
+            <legend><small><b>Grant rating option</b></small></legend>
+            <input type="text" id="emailRate" placeholder="User email" />
+            <input type="button" value="Grant" id="buttonRate" placeholder="User email" />
+            <br />
+        </fieldset>
+    </div>
+    <div class="col-md-3">
+        <div></div>
+        <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                All user emails
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @foreach (var user in Model.AllUsers)
+                {
+                    <a class="dropdown-item">@user.Email</a>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+<br />
+<hr />
+<div class="row">
+    <div class="col-md-3">
+        <div class="row">
+            <h6>These people can write articles:</h6>
+            <ul>
+                @foreach (var user in Model.WritingUsers)
+                {
+                    <li>@user.Name</li>
+                }
+            </ul>
+            <span id="result1"></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="row">
+            <h6>These people can comment articles: </h6>
+            <ul>
+                @foreach (var user in Model.CommentingUsers)
+                {
+                    <li>@user.Name</li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="row">
+            <h6>These people can rate articles:</h6>
+            <ul>
+                @foreach (var user in Model.RatingUsers)
+                {
+                    <li>@user.Name</li>
+                }
+            </ul>
+            <div>
+                <span id="result3"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<span id="result1"></span>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        @*$('#buttonWrite').click(function (e) {
+            e.preventDefault()
+            var id = $('#buttonWrite').val();
+            $.ajax({
+                type: 'GET',
+                url: '/admin/writeid/' + id,
+                success: function (result) {
+                    $('#result1').html(result);
+                }
+            });
+        });*@
+
+        $('#buttonWrite').click(function (e) {
+            e.preventDefault()
+            var email = $('#emailWrite').val();
+            $.ajax({
+                type: 'GET',
+                url: '/admin/write/' + email,
+                success: function (result) {
+                $('#result1').html(result);
+                }
+            });
+            location.reload();
+        });
+
+        $('#buttonComment').click(function (e) {
+            e.preventDefault()
+            var email = $('#emailComment').val();
+            $.ajax({
+                type: 'GET',
+                url: '/admin/comment/' + email,
+                success: function (result) {
+                    $('#result1').html(result);
+                }
+            });
+            location.reload();
+        });
+
+        $('#buttonRate').click(function (e) {
+            e.preventDefault()
+            var email = $('#emailRate').val();
+            $.ajax({
+                type: 'GET',
+                url: '/admin/rate/' + email,
+                success: function (result) {
+                    $('#result1').html(result);
+                }
+            });
+            location.reload();
+        });
+    });
+</script>
+
+
+

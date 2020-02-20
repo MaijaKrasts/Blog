@@ -1,6 +1,7 @@
 ﻿using Blog.Data.Base;
 using Blog.Data.Db;
 using Blog.Data.Entities;
+using Blog.Data.Repositories.Interfaces;
 using System.Data.Entity;
 
 namespace Blog.Data.Repositories

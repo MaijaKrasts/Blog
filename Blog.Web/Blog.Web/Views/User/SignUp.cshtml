@@ -1,0 +1,29 @@
+﻿@model Blog.Web.Models.User.UserDataModel
+@{
+    ViewBag.Title = "SignUp";
+}
+
+
+<h2>SignUp</h2>
+
+@Html.ValidationSummary()
+
+<form action="SignUp" method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Name</label>
+        <input asp-for="Name" class="form-control" id="exampleInputName1" placeholder="Name" />
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input asp-for="Email" class="form-control" id="exampleInputEmail1" placeholder="Email" />
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input input asp-for="Password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Repeat password</label>
+        <input input asp-for="PasswordRepeat" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-outline-dark">Sign up</button>
+</form>

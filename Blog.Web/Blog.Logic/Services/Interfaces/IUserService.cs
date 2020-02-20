@@ -1,5 +1,4 @@
-﻿using Blog.Data.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Blog.Data.Entities.Services.Interfaces
 {
@@ -7,7 +6,7 @@ namespace Blog.Data.Entities.Services.Interfaces
     {
         User Get(int id);
         List<User> GetAll();
-
+        User Create(User user);
         void Update(User user);
         User GetByEmailAndPassword(string email, string password);
         User GetByEmail(string email);

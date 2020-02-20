@@ -1,0 +1,30 @@
+﻿@model Blog.Web.Models.Article.ArticleModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h1>EditArticle</h1>
+<h5 class="text-danger">@Html.ValidationSummary()</h5>
+
+<form class="form-horizontal" method="post" enctype="multipart/form-data" id="myTabContent">
+    <img src="@Model.Picture" alt="" />
+    <div class="form-group">
+        <input asp-for="UpdatedPicture" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Title</label>
+        <input asp-for="Title" class="form-control">
+    </div>
+    <div class="form-group">
+        <label class="control-label">Intro</label>
+        <input asp-for="Intro" class="form-control">
+    </div>
+    <div class="form-group">
+        <label class="control-label">Text</label>
+        <input asp-for="Text" class="form-control">
+    </div>
+    <div class="col-md-2">
+        <input type="submit" class="btn btn-light" name="btnAddMore" value="Save" />
+    </div>
+
+</form>

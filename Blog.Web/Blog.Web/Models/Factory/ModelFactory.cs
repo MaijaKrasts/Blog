@@ -20,7 +20,7 @@ namespace Blog.Web.Models.Factory
             _article = article;
         }
 
-        public MultipleArticleModel CreateMultipleArticleModel()
+        public MultipleArticleModel MultipleArticleModel()
         {
 
             MultipleArticleModel model = new MultipleArticleModel()
@@ -34,7 +34,7 @@ namespace Blog.Web.Models.Factory
             return model;
         }
 
-        public SingleArticleModel CreateSingleArticleModel(int articleId, int userId)
+        public SingleArticleModel SingleArticleModel(int articleId, int userId)
         {
             Data.Entities.Article article = _article.Get(articleId);
             List<Comment> comments = _comment.GetForArticle(articleId);
@@ -62,7 +62,7 @@ namespace Blog.Web.Models.Factory
             return model;
         }
 
-        public ArticleModel CreateArticleModel(int Id)
+        public ArticleModel ArticleModel(int Id)
         {
             var article = _article.Get(Id);
             ArticleModel model = new ArticleModel()
@@ -78,7 +78,7 @@ namespace Blog.Web.Models.Factory
             return model;
         }
 
-        public UserArticleModel CreateUserArticleModel(int Id)
+        public UserArticleModel UserArticleModel(int Id)
         {
             UserArticleModel model = new UserArticleModel()
             {
@@ -89,7 +89,7 @@ namespace Blog.Web.Models.Factory
             return model;
         }
 
-        public UserModel CreateUserModel(int Id)
+        public UserModel UserModel(int Id)
         {
             var user = _user.Get(Id);
 
@@ -129,7 +129,7 @@ namespace Blog.Web.Models.Factory
             return model;
         }
 
-        public AdminModel CreateAdminModel()
+        public Web.Models.Admin.AdminModel AdminModel()
         {
             AdminModel model = new AdminModel()
             {
@@ -166,6 +166,50 @@ namespace Blog.Web.Models.Factory
             _article.Update(currentArticle);
 
             return model;
+        }
+
+        public Data.Entities.User CreateUserFromModel(UserDataModel model)
+        {
+            var password = _user.SavePassword(model.Password);
+
+            string uniqueFileName = "/uploads/default-user.png";
+
+            var user = new Data.Entities.User()
+            {
+                Name = model.Name,
+                Email = model.Email,
+                Password = password,
+                Picture = "/uploads/" + uniqueFileName,
+            };
+
+            _user.Create(user);
+            return user;
+        }
+
+        public Data.Entities.Article CreateFromModel(ArticleModel model)
+        {
+            string uniqueFileName = "empty";
+            //if (model.UpdatedPicture != null)
+            //{
+            //    uniqueFileName = _file.GetUniqueFileName(model.UpdatedPicture.FileName);
+            //    var uploads = Path.Combine(hostingEnvironment.WebRootPath, "uploads");
+            //    var filePath = Path.Combine(uploads, uniqueFileName);
+            //    model.UpdatedPicture.CopyTo(new FileStream(filePath, FileMode.Create));
+            //}
+
+            Data.Entities.Article article = new Data.Entities.Article()
+            {
+                Id = model.Id,
+                AuthorId = model.AuthorId,
+                Intro = model.Intro,
+                Picture = "/uploads/" + uniqueFileName,
+                Text = model.Text,
+                Title = model.Title,
+            };
+
+            _article.Create(article);
+
+            return article;
         }
     }
 }

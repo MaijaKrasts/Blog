@@ -1,5 +1,4 @@
-﻿using Blog.Data.Entities;
-using Blog.Data.Repositories.Interfaces;
+﻿using Blog.Data.Repositories.Interfaces;
 using Blog.Data.Entities.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +14,10 @@ namespace Blog.Data.Entities.Services
         {
             _article = article;
             _commentService = commentService;
+        }
+        public Article Create(Article article)
+        {
+           return _article.Create(article);
         }
 
         public List<Article> GetAll()

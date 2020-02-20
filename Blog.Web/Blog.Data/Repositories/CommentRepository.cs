@@ -2,6 +2,7 @@
 using Blog.Data.Base;
 using Blog.Data.Db;
 using Blog.Data.Entities;
+using Blog.Data.Repositories.Interfaces;
 
 namespace Blog.Data.Repositories
 {

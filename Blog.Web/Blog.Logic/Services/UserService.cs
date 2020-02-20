@@ -1,10 +1,6 @@
-﻿using Blog.Data.Entities;
-using Blog.Data.Repositories.Interfaces;
-using System;
+﻿using Blog.Data.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Helpers;
 
 namespace Blog.Data.Entities.Services
@@ -16,7 +12,10 @@ namespace Blog.Data.Entities.Services
         {
             _user = user;
         }
-
+        public User Create(User user)
+        {
+            return _user.Create(user);
+        }
         public User Get(int id)
         {
             return _user.Get(id);
