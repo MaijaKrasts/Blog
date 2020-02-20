@@ -16,9 +16,12 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Blog.Web.DependencyResolution {
+    using Blog.Data.Entities.Services;
+    using Blog.Data.Entities.Services.Interfaces;
     using StructureMap.Configuration.DSL;
     using StructureMap.Graph;
-	
+    using System.Data.Entity;
+
     public class DefaultRegistry : Registry {
         #region Constructors and Destructors
 
@@ -32,6 +35,7 @@ namespace Blog.Web.DependencyResolution {
 					scan.With(new ControllerConvention());
                 });
             //For<IExample>().Use<Example>();
+            For<DbContext>().Use(() => new DbContext("BlogDb"));
         }
 
         #endregion

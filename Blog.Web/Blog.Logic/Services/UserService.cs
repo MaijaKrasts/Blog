@@ -1,11 +1,12 @@
-﻿using Blog.Data.Repositories.Interfaces;
+﻿using Blog.Data.Entities.Services.Interfaces;
+using Blog.Data.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Helpers;
 
 namespace Blog.Data.Entities.Services
 {
-    public class UserService
+    public class UserService :IUserService
     {
         private IUserRepository _user;
         public UserService(IUserRepository user)

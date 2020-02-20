@@ -1,4 +1,5 @@
 ﻿using Blog.Data.Entities;
+using Blog.Data.Entities.Services.Interfaces;
 using Blog.Data.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Blog.Data.Entities.Services
 {
-    public class CommentService
+    public class CommentService :ICommentService
     {
         private ICommentRepository _comment;
 

@@ -1,4 +1,3 @@
-C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\obj\Debug\Blog.Logic.csprojAssemblyReference.cache
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\bin\Debug\Blog.Logic.dll
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\bin\Debug\Blog.Logic.pdb
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\bin\Debug\Blog.Data.dll
@@ -17,6 +16,7 @@ C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\bin\Debug\System.Web.W
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\bin\Debug\System.Web.WebPages.Razor.xml
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\bin\Debug\EntityFramework.xml
+C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\obj\Debug\Blog.Logic.csprojAssemblyReference.cache
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\obj\Debug\Blog.Logic.csproj.CopyComplete
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\obj\Debug\Blog.Logic.dll
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\obj\Debug\Blog.Logic.pdb
