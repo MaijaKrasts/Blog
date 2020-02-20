@@ -9,3 +9,5 @@ C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Data\obj\Debug\Blog.Data.csp
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Data\obj\Debug\Blog.Data.csproj.CopyComplete
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Data\obj\Debug\Blog.Data.dll
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Data\obj\Debug\Blog.Data.pdb
+C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Data\obj\Debug\Blog.Data.Migrations.InitialCreate.resources
+C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Data\obj\Debug\Blog.Data.csproj.GenerateResource.cache

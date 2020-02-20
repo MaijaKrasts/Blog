@@ -20,3 +20,6 @@ C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\obj\Debug\Blog.Logic.c
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\obj\Debug\Blog.Logic.csproj.CopyComplete
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\obj\Debug\Blog.Logic.dll
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\obj\Debug\Blog.Logic.pdb
+C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\bin\Debug\Blog.Logic.dll.config
+C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Logic\bin\Debug\EntityFramework.SqlServer.xml

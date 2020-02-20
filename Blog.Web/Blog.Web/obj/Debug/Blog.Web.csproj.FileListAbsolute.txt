@@ -74,3 +74,4 @@ C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Web\obj\Debug\Blog.Web.cspro
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Web\obj\Debug\Blog.Web.csproj.CopyComplete
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Web\obj\Debug\Blog.Web.dll
 C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Web\obj\Debug\Blog.Web.pdb
+C:\Users\m.krastina\source\repos\Blog\Blog.Web\Blog.Web\bin\Blog.Logic.dll.config

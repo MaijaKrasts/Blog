@@ -1,12 +1,13 @@
 ﻿using Blog.Data.Entities;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace Blog.Data.Db
 {
     public class BlogDb : DbContext
     {
-        public BlogDb(DbContext options)
-            : base()
+        public BlogDb()
+            : base("BlogDb")
         {
 
         }
