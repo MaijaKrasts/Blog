@@ -39,7 +39,7 @@ namespace Blog.Web.Controllers
             return View(_model.CreateUserArticleModel(Id));
         }
 
-        public ActionResult Single(int articleId, int userId)
+        public ActionResult Single(int articleId, int? userId)
         {
             var model = _model.CreateSingleArticleModel(articleId, userId);
             return View(model);
@@ -65,20 +65,25 @@ namespace Blog.Web.Controllers
             return View(model);
         }
 
-        public ActionResult EditArticle(int Id)
+        public ActionResult Edit(int Id)
         {
             return View(_model.CreateArticleModel(Id));
         }
 
         [HttpPost]
-        public ActionResult EditArticle(ArticleModel model)
+        public ActionResult Edit(ArticleModel model, HttpPostedFileBase file)
         {
-            //var validFile = _fileValidator.ValidateImage(model.UpdatedPicture);
-            //if (ModelState.IsValid && validFile)
-            //{
-            //    _model.UpdateArticleModel(model);
-            //    return RedirectToAction("AllArticles", "Article");
-            //}
+            if (ModelState.IsValid)
+            {
+                if (file != null)
+                {
+                    file.SaveAs(HttpContext.Server.MapPath("~/Uploads/") + file.FileName);
+                    model.Picture = "/Uploads/" + file.FileName;
+                }
+
+                _model.UpdateArticleModel(model);
+                return RedirectToAction("AllArticles", "Article");
+            }
 
             ModelState.AddModelError("error", ErrorMessages.UploadError);
             return View(model);

@@ -19,8 +19,7 @@ namespace Blog.Web.Models.Article
         [Required]
         public string Text { get; set; }
 
-       // public IFormFile UpdatedPicture { get; set; }
-
+        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$")]
         public string Picture { get; set; }
 
         public int AuthorId { get; set; }

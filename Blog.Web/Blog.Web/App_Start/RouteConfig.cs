@@ -22,7 +22,7 @@ namespace Blog.Web
             routes.MapRoute(
                name: "Article",
                url: "{controller}/{action}/{articleId}/{userId}",
-               defaults: new { controller = "Action", action = "Single", userId = UrlParameter.Optional }
+               defaults: new { controller = "Action", action = "Single"}
            );
         }
     }

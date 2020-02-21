@@ -2,6 +2,7 @@
 using Blog.Data.Entities.Services.Interfaces;
 using Blog.Web.Models.Service;
 using Blog.Web.Models.User;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Blog.Web.Controllers
@@ -89,19 +90,23 @@ namespace Blog.Web.Controllers
 
         public ActionResult EditProfile(int Id)
         {
-            var model = _model.CreateUserModel(Id);
-            return View(model);
+            return View(_model.CreateUserModel(Id));
         }
 
         [HttpPost]
-        public ActionResult EditProfile(UserModel model)
+        public ActionResult EditProfile(UserModel model, HttpPostedFileBase file)
         {
-            //var validFile = _fileValidator.ValidateImage(model.UpdatedPicture);
-            //if (ModelState.IsValid && validFile)
-            //{
-            //    model = _model.UpdateUserModel(model);
-            //    return RedirectToAction(nameof(Profile), new { Id = model.Id });
-            //}
+            if (ModelState.IsValid)
+            {if (file != null)
+                {
+                    file.SaveAs(HttpContext.Server.MapPath("~/Uploads/") + file.FileName);
+                    model.Picture = "/Uploads/" + file.FileName;
+                }
+
+                _model.UpdateUserModel(model);
+                return RedirectToAction(nameof(Profile), new { Id = model.Id });
+
+            }
 
             ModelState.AddModelError("error", ErrorMessages.UploadError);
             return View(model);

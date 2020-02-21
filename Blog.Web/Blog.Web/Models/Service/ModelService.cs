@@ -21,7 +21,7 @@ namespace Blog.Web.Models.Service
             return _factory.MultipleArticleModel();
         }
 
-        public SingleArticleModel CreateSingleArticleModel(int articleId, int userId)
+        public SingleArticleModel CreateSingleArticleModel(int articleId, int? userId)
         {
             return _factory.SingleArticleModel(articleId, userId);
         }

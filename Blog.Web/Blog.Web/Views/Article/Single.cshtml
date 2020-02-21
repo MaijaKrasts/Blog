@@ -11,9 +11,9 @@
         <p class="singleText">@Model.Article.Text</p>
     </div>
     <div class="col-2">
-        @if (Model.Article.AuthorId == Model.User.Id)
+        @if (Model.User != null && Model.Article.AuthorId == Model.User.Id)
         { 
-        <a>@Html.ActionLink("Edit", "EditArticle", "Article", new { Id = Model.Article.Id }, null)</a>
+        <a>@Html.ActionLink("Edit", "Edit", "Article", new { Id = Model.Article.Id }, null)</a>
         <a>@Html.ActionLink("Delete", "Delete", "Article", new { Id = Model.Article.Id }, null)</a>
         }
     </div>
@@ -28,7 +28,7 @@
                     <h3>Comment panel</h3>
                 </div>
                 <form class="panel-body">
-                    @if (Model.User.CanComment != 0)
+                    @if (Model.User != null && Model.User.CanComment != 0)
                     {
                         <span id="result1"></span>
                         <input id="Comment" class="form-control" placeholder="write a comment..." rows="3" />
@@ -64,7 +64,7 @@
                                                 <a class="pull-right" id="buttonReport" href="#"><small> Report </small></a>
                                             }
                                         }
-                                        @if (Model.User.Id == comment.AuthorId || Model.User.Role != 0)
+                                        @if (Model.User != null && Model.User.Id == comment.AuthorId || Model.User.Role != 0)
                                         {
                                             if (Model.User.Role == 0)
                                             {
@@ -92,7 +92,7 @@
     <div class="col-md-6 col-md-offset-2 col-sm-6">
         <h6>Rating:</h6>
         <p id="rating">@Model.Article.Rating</p>
-        @if (Model.User.CanRate != 0)
+        @if (Model.User != null && Model.User.CanRate != 0)
         {
             <a id="buttonRatePlus" value="1">+</a>
             <a id="buttonRateMinus">-</a>

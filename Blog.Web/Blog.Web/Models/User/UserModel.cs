@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Blog.Web.Models.User
 {
@@ -15,8 +12,7 @@ namespace Blog.Web.Models.User
 
         public string Password { get; set; }
 
-        //public IFormFile UpdatedPicture { get; set; }
-
+        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$")]
         public string Picture { get; set; }
     }
 }

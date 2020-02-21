@@ -35,24 +35,18 @@ namespace Blog.Web.Models.Factory
             return model;
         }
 
-        public SingleArticleModel SingleArticleModel(int articleId, int userId)
+        public SingleArticleModel SingleArticleModel(int articleId, int? userId)
         {
+            Data.Entities.User user = null;
             Data.Entities.Article article = _article.Get(articleId);
             List<Comment> comments = _comment.GetForArticle(articleId);
-            Data.Entities.User user = _user.Get(userId);
+           if (userId != null)
+            {
+                int id = userId.GetValueOrDefault();
+                user = _user.Get(id);
+            }
+
             List<Data.Entities.User> users = _user.GetAll();
-            //if (user == null)
-            //{
-            //    user = new User()
-            //    {
-            //        Id = 0,
-            //        Name = "default name",
-            //        Email = "default email",
-            //        CanComment = 0,
-            //        CanRate = 0,
-            //        CanWrite = 0,
-            //    };
-            //}
 
             SingleArticleModel model = new SingleArticleModel();
             model.Article = article;
@@ -120,16 +114,11 @@ namespace Blog.Web.Models.Factory
         {
             var currentUser = _user.Get(model.Id);
             var fileName = currentUser.Picture;
-            var uniqueFileName = "empty";
 
-            //if (model.UpdatedPicture != null)
-            //{
-            //    uniqueFileName = _file.GetUniqueFileName(model.UpdatedPicture.FileName);
-            //    var uploads = Path.Combine(hostingEnvironment.WebRootPath, "uploads");
-            //    var filePath = Path.Combine(uploads, uniqueFileName);
-            //    model.UpdatedPicture.CopyTo(new FileStream(filePath, FileMode.Create));
-            //    fileName = "/uploads/" + uniqueFileName;
-            //}
+            if (model.Picture != currentUser.Picture && model.Picture != null)
+            {
+                fileName = model.Picture;
+            }
 
             currentUser.Name = model.Name;
             currentUser.Email = model.Email;
@@ -159,16 +148,11 @@ namespace Blog.Web.Models.Factory
         {
             var currentArticle = _article.Get(model.Id);
             var fileName = currentArticle.Picture;
-            var uniqueFileName = "empty";
 
-            //if (model.UpdatedPicture != null)
-            //{
-            //    uniqueFileName = _file.GetUniqueFileName(model.UpdatedPicture.FileName);
-            //    var uploads = Path.Combine(hostingEnvironment.WebRootPath, "uploads");
-            //    var filePath = Path.Combine(uploads, uniqueFileName);
-            //    model.UpdatedPicture.CopyTo(new FileStream(filePath, FileMode.Create));
-            //    fileName = "/uploads/" + uniqueFileName;
-            //}
+            if (model.Picture != currentArticle.Picture && model.Picture != null)
+            {
+                fileName = model.Picture;
+            }
 
             currentArticle.Title = model.Title;
             currentArticle.Intro = model.Intro;

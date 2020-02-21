@@ -2,56 +2,35 @@
 @{
     ViewBag.Title = "EditProfile";
 }
-
-    <div class="container emp-profile">
-        <form class="form-horizontal" method="post" enctype="multipart/form-data">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="profile-img">
-                        <h5 class="text-danger">@Html.ValidationSummary()</h5>
-                        <div class="form-group">
-                            <img src="@Model.Picture" alt="" />
-                            <div class="file btn btn-lg btn-outline-dark">
-                                Change Photo
-                                <input asp-for="UpdatedPicture" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="profile-head">
-                        <h5>
-                            @Model.Name
-                        </h5>
-                    </div>
-                    <div class="tab-content profile-tab" id="myTabContent">
-                        <div class="tab-pane fade show active">
-                            <div class="row">
-                                <div class="form-group">
-                                    <div class="col-md-6">
-                                        <label class="control-label">Name</label>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <input asp-for="Name" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <div class="col-md-6">
-                                        <label class="control-label">Email</label>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <input asp-for="Email" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <input type="submit" class="btn btn-light" name="btnAddMore" value="Save" />
-                </div>
-            </div>
-        </form>
-    </div>
+@using (Html.BeginForm("EditProfile", "User", null, FormMethod.Post,
+                              new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <fieldset>
+        <legend>Image</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Picture)
+        </div>
+        <div class="editor-field">
+            <input id="ImagePath" title="Upload profile image"
+                   type="file" name="file" />
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+        </div>
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" vaue="Save" />
+        </div>
+        
+    </fieldset>
+}
