@@ -24,29 +24,29 @@ namespace Blog.Web.Controllers
 
         }
 
-        [Route("write/{email}")]
-        public ActionResult GrantWriteAccess(string email)
+        [HttpPost]
+        public JsonResult GrantWriteAccess(string email)
         {
             _user.UpdateUserCanWriteStatuss(email);
-            return Json( new { ErrorMessages.StatussUpdated, email });
+            return Json(new { ErrorMessages.StatussUpdated, email });
         }
 
-        [Route("comment/{email}")]
-        public ActionResult GrantCommentAccess(string email)
+        [HttpPost]
+        public JsonResult GrantCommentAccess(string email)
         {
             _user.UpdateUserCanCommentStatuss(email);
             return Json(new { ErrorMessages.StatussUpdated, email });
         }
 
-        [Route("rate/{email}")]
-        public ActionResult GrantRateAccess(string email)
+        [HttpPost]
+        public JsonResult GrantRateAccess(string email)
         {
             _user.UpdateUserCanRateStatuss(email);
             return Json(new { ErrorMessages.StatussUpdated, email });
         }
 
-        [Route("writeid/{id}")]
-        public ActionResult GrantWriteAccessId(int id)
+        [HttpPost]
+        public JsonResult GrantWriteAccessId(int id)
         {
             _user.UpdateUserCanWriteStatussId(id);
             return Json(new { ErrorMessages.StatussUpdated});
