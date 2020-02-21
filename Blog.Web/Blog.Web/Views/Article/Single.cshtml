@@ -56,7 +56,7 @@
                                         @foreach (var user in Model.Users.Where(u => u.Id == comment.AuthorId))
                                         {
                                             <a class="pull-left">
-                                                <img src="@user.Picture" alt="" class="img-circle">
+                                                <img class="col-md-1 img-responsive" src="@user.Picture" alt="" class="img-circle">
                                             </a>
                                             <strong class="text-success">@user.Name</strong>
                                             if (comment.Reported == 0)
@@ -109,12 +109,14 @@
     $(document).ready(function () {
 
         $('#buttonComment').click(function () {
-            var articleId = $('#ArticleId').val();
-            var userId = $('#UserId').val();
-            var comment = $('#Comment').val();
+            var ArticleId = $('#ArticleId').val();
+            var UserId = $('#UserId').val();
+            var Comment = $('#Comment').val();
             $.ajax({
-                type: 'GET',
-                url: '/article/writecomment/' + articleId + '/' + userId+ '/' +comment,
+                url: '/Article/WriteComment/',
+                type: 'POST',
+                datatype: "JSON",
+                data: {articleId: ArticleId, userId: UserId, comment: Comment},
                 success: function (result) {
                     $('#result1').html(result);
                 }
@@ -122,10 +124,12 @@
         });
     //bug: grabs only the first comment to delete-->
         $('#buttonDeleteComment').click(function () {
-            var commentId = $('#CommentId').val();
+            var CommentId = $('#CommentId').val();
             $.ajax({
-                type: 'GET',
-                url: '/article/deletecomment/' + commentId,
+                url: '/Article/DeleteComment/',
+                type: 'POST',
+                datatype: "JSON",
+                data: {commentId: CommentId},
                 success: function (result) {
                     $('#result1').html(result);
                 }
@@ -133,35 +137,43 @@
         });
 
         $('#buttonRatePlus').click(function () {
-            var articleId = $('#ArticleId').val();
-            var rateValue = $('#RatePlus').val();
+            var ArticleId = $('#ArticleId').val();
+            var RateValue = $('#RatePlus').val();
+
             $.ajax({
-                type: 'GET',
-                url: '/article/ratearticle/' + articleId  + '/' + rateValue,
+                url: '/Article/RateArticle/',
+                type: 'POST',
+                datatype: "JSON",
+                data: {articleId: ArticleId, rateValue: RateValue},
                 success: function (result) {
-                    $('#rating').html(result);
+                    $('#result1').html(result);
                 }
             });
         });
 
         $('#buttonRateMinus').click(function () {
-            var articleId = $('#ArticleId').val();
-            var rateValue = $('#RateMinus').val();
+            var ArticleId = $('#ArticleId').val();
+            var RateValue = $('#RateMinus').val();
+
             $.ajax({
-                type: 'GET',
-                url: '/article/ratearticle/' + articleId  + '/' + rateValue,
+                url: '/Article/RateArticle/',
+                type: 'POST',
+                datatype: "JSON",
+                data: {articleId: ArticleId, rateValue: RateValue},
                 success: function (result) {
-                    $('#rating').html(result);
+                    $('#result1').html(result);
                 }
             });
         });
 
         //bug: grabs only the first comment to report-->
         $('#buttonReport').click(function () {
-            var commentId = $('#CommentId').val();
+            var CommentId = $('#CommentId').val();
             $.ajax({
-                type: 'GET',
-                url: '/article/reportcomment/' + commentId,
+                url: '/Article/ReportComment/',
+                type: 'POST',
+                datatype: "JSON",
+                data: {commentId: CommentId},
                 success: function (result) {
                     $('#result1').html(result);
                 }
@@ -170,10 +182,12 @@
 
         //bug: grabs only the first comment to keep-->
         $('#buttonKeepReported').click(function () {
-            var commentId = $('#CommentId').val();
+            var CommentId = $('#CommentId').val();
             $.ajax({
-                type: 'GET',
-                url: '/article/keepcomment/' + commentId,
+                url: '/Article/KeepReportedComment/',
+                type: 'POST',
+                datatype: "JSON",
+                data: {commentId: CommentId},
                 success: function (result) {
                     $('#result1').html(result);
                 }

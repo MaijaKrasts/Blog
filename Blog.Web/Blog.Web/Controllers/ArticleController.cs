@@ -102,22 +102,22 @@ namespace Blog.Web.Controllers
             return Json(new { ErrorMessages.CommentAdded });
         }
 
-        [Route("article/deletecomment/{commentId}")]
-        public ActionResult DeleteComment(int commentId)
+        [HttpPost]
+        public JsonResult DeleteComment(int commentId)
         {
             _comment.Delete(commentId);
             return Json(new{ ErrorMessages.CommentDeleted});
         }
 
-        [Route("article/reportcomment/{commentId}")]
-        public ActionResult ReportComment(int commentId)
+        [HttpPost]
+        public JsonResult ReportComment(int commentId)
         {
             _comment.ReportComment(commentId);
             return Json(new { ErrorMessages.CommentReported});
         }
 
-        [Route("article/keepcomment/{commentId}")]
-        public ActionResult KeepReportedComment(int commentId)
+        [HttpPost]
+        public JsonResult KeepReportedComment(int commentId)
         {
             _comment.KeepReported(commentId);
             return Json(new { ErrorMessages.CommentRestored });

@@ -114,7 +114,7 @@
         $('#buttonComment').click(function () {
             var Email = $('#emailComment').val();
             $.ajax({
-                 url: '/Admin//GrantCommentAccess/',
+                 url: '/Admin/GrantCommentAccess/',
                 type: 'POST',
                 datatype: "JSON",
                  data: {email: Email},
@@ -129,7 +129,7 @@
             e.preventDefault()
             var Email = $('#emailRate').val();
             $.ajax({
-                url: '/Admin//GrantRateAccess/',
+                url: '/Admin/GrantRateAccess/',
                 type: 'POST',
                 datatype: "JSON",
                 data: {email: Email},
