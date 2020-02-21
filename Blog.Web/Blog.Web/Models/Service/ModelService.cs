@@ -31,6 +31,11 @@ namespace Blog.Web.Models.Service
             return _factory.ArticleModel(id);
         }
 
+        public ArticleModel EmpthyArticleModel(int userId)
+        {
+            return _factory.EmpthyArticleModel(userId);
+        }
+
         public UserArticleModel CreateUserArticleModel(int id)
         {
             return _factory.UserArticleModel(id);
@@ -59,6 +64,11 @@ namespace Blog.Web.Models.Service
         public Data.Entities.User CreateUserFromModel(UserDataModel model)
         {
             return _factory.CreateUserFromModel(model);
+        }
+
+        public Data.Entities.Article CreateArticleFromModel(ArticleModel model)
+        {
+            return _factory.CreateArticleFromModel(model);
         }
     }
 }

@@ -3,6 +3,7 @@ using Blog.Data.Entities.Services.Interfaces;
 using Blog.Web.Models.Admin;
 using Blog.Web.Models.Article;
 using Blog.Web.Models.User;
+using System;
 using System.Collections.Generic;
 
 namespace Blog.Web.Models.Factory
@@ -78,6 +79,16 @@ namespace Blog.Web.Models.Factory
             return model;
         }
 
+        public ArticleModel EmpthyArticleModel(int userId)
+        {
+            ArticleModel model = new ArticleModel()
+            {
+                AuthorId = userId
+            };
+
+            return model;
+        }
+
         public UserArticleModel UserArticleModel(int Id)
         {
             UserArticleModel model = new UserArticleModel()
@@ -143,6 +154,7 @@ namespace Blog.Web.Models.Factory
             return model;
         }
 
+
         public ArticleModel UpdateArticleModel(ArticleModel model)
         {
             var currentArticle = _article.Get(model.Id);
@@ -186,7 +198,7 @@ namespace Blog.Web.Models.Factory
             return user;
         }
 
-        public Data.Entities.Article CreateFromModel(ArticleModel model)
+        public Data.Entities.Article CreateArticleFromModel(ArticleModel model)
         {
             string uniqueFileName = "empty";
             //if (model.UpdatedPicture != null)
@@ -202,9 +214,11 @@ namespace Blog.Web.Models.Factory
                 Id = model.Id,
                 AuthorId = model.AuthorId,
                 Intro = model.Intro,
-                Picture = "/uploads/" + uniqueFileName,
+                Picture = model.Picture,
                 Text = model.Text,
                 Title = model.Title,
+                CreatedOn = DateTime.Now,
+                Rating = 0,
             };
 
             _article.Create(article);

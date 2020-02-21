@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Const\Parameters\" />
+    <Folder Include="Validators\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

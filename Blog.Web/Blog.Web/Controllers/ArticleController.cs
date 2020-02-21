@@ -45,20 +45,21 @@ namespace Blog.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int userId)
         {
-            return View(new ArticleModel());
+            return View(_model.EmpthyArticleModel(userId));
         }
 
         [HttpPost]
-        public ActionResult Create(ArticleModel model)
+        public ActionResult Create(ArticleModel model, HttpPostedFileBase file)
         {
-            //var validFile = _fileValidator.ValidateImage(model.UpdatedPicture);
-            //if (ModelState.IsValid && validFile)
-            //{
-            //    _articleFactory.CreateFromModel(model);
-            //    return RedirectToAction("Index", "Home");
-            //}
+            if (ModelState.IsValid)
+            {
+                file.SaveAs(HttpContext.Server.MapPath("~/Uploads/") + file.FileName);
+                model.Picture = "/Uploads/" + file.FileName;
+                _model.CreateArticleFromModel(model);
+                return RedirectToAction("Index", "Home");
+            }
 
             ModelState.AddModelError("error", ErrorMessages.UploadError);
             return View(model);

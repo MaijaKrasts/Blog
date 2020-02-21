@@ -6,37 +6,45 @@
 <h1>Create new article</h1>
 <h5 class="text-danger">@Html.ValidationSummary()</h5>
 
-<form class="form-horizontal" action="Create" method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label class="col-sm-2 control-label">Title</label>
-        <div class="col-sm-10">
-            <input asp-for="Title" class="form-control">
-        </div>
+@using (Html.BeginForm("Create", "Article", null, FormMethod.Post,
+                              new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+<fieldset>
+    <legend>Image</legend>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Picture)
     </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">Picture upload</label>
-        <div class="col-sm-10">
-            <input asp-for="UpdatedPicture" />
-        </div>
+    <div class="editor-field">
+        <input id="ImagePath" title="Upload a product image"
+               type="file" name="file" />
     </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">Intro</label>
-        <div class="col-sm-10">
-            <textarea asp-for="Intro" class="form-control"></textarea>
-        </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Title)
     </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">Text</label>
-        <div class="col-sm-10">
-            <textarea asp-for="Text" class="form-control"></textarea>
-        </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Title)
     </div>
-    <div class="form col-sm-10">
-        <input asp-for="AuthorId" type="hidden" class="form-control" value="@Session["userId"]">
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Intro)
     </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <input type="submit" class="btn btn-light" vaue="Save" />
-        </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Intro)
     </div>
-</form>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Text)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Text)
+    </div>
+
+    <div class="editor-field">
+        @Html.HiddenFor(model => model.AuthorId)
+    </div>
+    <div class="col-sm-offset-2 col-sm-10">
+        <input type="submit" vaue="Save" />
+    </div>
+</fieldset>
+}
+

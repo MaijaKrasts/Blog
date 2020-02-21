@@ -28,7 +28,7 @@
         <div class="col-md-3 col-sm-6 mb-4">
                 <img class="img-responsive" src="@article.Picture" alt="">
                 <h5>
-                    @Html.ActionLink(article.Title, "Single", "Article", new { articleId = Model.LatestArticle.Id, userId = Session["userId"]}, null)
+                    @Html.ActionLink(article.Title, "Single", "Article", new { articleId = article.Id, userId = Session["userId"]}, null)
                 </h5>
         </div>
     }
@@ -51,7 +51,7 @@
                 <div class="col-md-4 col-sm-4 mb-auto">
                         <img class="img-responsive" src="@article.Picture" alt="">
                         <h6>
-                            @Html.ActionLink(article.Title, "Single", "Article", new { articleId = Model.LatestArticle.Id, userId = Session["userId"] }, null)
+                            @Html.ActionLink(article.Title, "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)
                         </h6>
                         <p><small>Article rating: @article.Rating</small></p>
                 </div>
@@ -72,7 +72,7 @@
                 <div class="col-md-4 col-sm-4 mb-auto">
                         <img class="img-responsive" src="@article.Picture" alt="">
                         <h6>
-                            @Html.ActionLink(article.Title, "Single", "Article", new { articleId = Model.LatestArticle.Id, userId = Session["userId"] }, null)
+                            @Html.ActionLink(article.Title, "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)
                         </h6>
                 </div>
             }
