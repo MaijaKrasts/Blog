@@ -2,41 +2,42 @@
 using Blog.Data.Entities.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using Blog.Logic.Const.Parameters;
 
 namespace Blog.Data.Entities.Services
 {
     public class ArticleService :IArticleService
     {
-        private IArticleRepository _article;
+        private IArticleRepository _articleRepository;
         private ICommentService _commentService;
 
-        public ArticleService(IArticleRepository article, ICommentService commentService)
+        public ArticleService(IArticleRepository articleRepository, ICommentService commentService)
         {
-            _article = article;
+            _articleRepository = articleRepository;
             _commentService = commentService;
         }
         public Article Create(Article article)
         {
-           return _article.Create(article);
+           return _articleRepository.Create(article);
         }
 
         public List<Article> GetAll()
         {
-            return _article.GetAll();
+            return _articleRepository.GetAll();
         }
 
         public Article Get(int id)
         {
-            return _article.Get(id);
+            return _articleRepository.Get(id);
         }
 
         public void Update(Article article)
         {
-           _article.Update(article);
+           _articleRepository.Update(article);
         }
         public List<Article> GetAllByDate()
         {
-            return _article.GetAll()
+            return _articleRepository.GetAll()
                 .OrderByDescending(c => c.CreatedOn)
                 .ToList();
         }
@@ -44,7 +45,7 @@ namespace Blog.Data.Entities.Services
         public List<Article> GetNumOf(int num)
         {
             var latestArticle = GetLatest();
-            return _article.GetAll()
+            return _articleRepository.GetAll()
                     .Where(a => a.Id != latestArticle.Id)
                     .Take(num)
                     .ToList();
@@ -52,7 +53,7 @@ namespace Blog.Data.Entities.Services
 
         public List<Article> GetHighestRated(int num)
         {
-            return _article.GetAll()
+            return _articleRepository.GetAll()
                     .OrderByDescending(i => i.Rating)
                     .Take(num)
                     .ToList();
@@ -60,27 +61,29 @@ namespace Blog.Data.Entities.Services
 
         public Article GetLatest()
         {
-            return GetAllByDate()[0];
+            return GetAllByDate()[Values.Zero];
         }
 
         public List<Article> GetUserArticles(int id)
         {
-            return _article.GetAll().Where(a => a.AuthorId == id)
+            return _articleRepository
+                .GetAll()
+                .Where(a => a.AuthorId == id)
                     .ToList();
         }
 
         public Article ChangeRating(int id, int rateValue)
         {
-            var article = _article.Get(id);
-            if (rateValue == 1)
+            var article = _articleRepository.Get(id);
+            if (rateValue == Values.One)
             {
                 article.Rating++;
             }
-            else if (rateValue == 0)
+            else if (rateValue == Values.Zero)
             {
                 article.Rating--;
             }
-            _article.Update(article);
+            _articleRepository.Update(article);
 
             return article;
         }
@@ -92,7 +95,7 @@ namespace Blog.Data.Entities.Services
 
             foreach (var comment in allCommentsDesc)
             {
-                var article = _article.Get(comment.ArticleId);
+                var article = _articleRepository.Get(comment.ArticleId);
 
                 if (!allLatestCommentArticles.Contains(article))
                 {
@@ -109,14 +112,17 @@ namespace Blog.Data.Entities.Services
 
         public void DeleteWithComments(int Id)
         {
-            var comments = _commentService.GetAll().Where(c => c.ArticleId == Id).ToList();
+            var comments = _commentService
+                .GetAll()
+                .Where(c => c.ArticleId == Id)
+                .ToList();
 
             foreach (var comment in comments)
             {
                 _commentService.Delete(comment.Id);
             }
 
-            _article.Delete(Id);
+            _articleRepository.Delete(Id);
         }
     }
 }

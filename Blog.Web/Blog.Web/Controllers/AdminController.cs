@@ -1,25 +1,24 @@
 ﻿using Blog.Data.Entities.Const.Messages;
 using Blog.Data.Entities.Services.Interfaces;
-using Blog.Web.Models.Service;
+using Blog.Web.Models.ModelRepository;
 using System.Web.Mvc;
 
 namespace Blog.Web.Controllers
 {
-    [Route("admin")]
     public class AdminController : Controller
     {
-        private ModelService _model;
-        private IUserService _user;
+        private ModelRepository _modelRepository;
+        private IUserService _userService;
 
-        public AdminController(ModelService model, IUserService user)
+        public AdminController(ModelRepository modelRepository, IUserService userService)
         {
-            _user = user;
-            _model = model;
+            _userService = userService;
+            _modelRepository = modelRepository;
         }
 
         public ActionResult AdminIndex()
         {
-            var model = _model.CreateAdminModel();
+            var model = _modelRepository.CreateAdminModel();
             return View(model);
 
         }
@@ -27,29 +26,29 @@ namespace Blog.Web.Controllers
         [HttpPost]
         public JsonResult GrantWriteAccess(string email)
         {
-            _user.UpdateUserCanWriteStatuss(email);
-            return Json(new { ErrorMessages.StatussUpdated, email });
+            _userService.UpdateUserCanWriteStatuss(email);
+            return Json(ErrorMessages.StatussUpdated, email);
         }
 
         [HttpPost]
         public JsonResult GrantCommentAccess(string email)
         {
-            _user.UpdateUserCanCommentStatuss(email);
-            return Json(new { ErrorMessages.StatussUpdated, email });
+            _userService.UpdateUserCanCommentStatuss(email);
+            return Json(ErrorMessages.StatussUpdated, email);
         }
 
         [HttpPost]
         public JsonResult GrantRateAccess(string email)
         {
-            _user.UpdateUserCanRateStatuss(email);
-            return Json(new { ErrorMessages.StatussUpdated, email });
+            _userService.UpdateUserCanRateStatuss(email);
+            return Json(ErrorMessages.StatussUpdated, email);
         }
 
         [HttpPost]
         public JsonResult GrantWriteAccessId(int id)
         {
-            _user.UpdateUserCanWriteStatussId(id);
-            return Json(new { ErrorMessages.StatussUpdated});
+            _userService.UpdateUserCanWriteStatussId(id);
+            return Json(ErrorMessages.StatussUpdated);
         }
     }
 }

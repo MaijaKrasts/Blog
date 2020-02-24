@@ -12,7 +12,7 @@
     <div class="col-2">
         @if (Model.User.CanWrite == 1)
         {
-        <a>@Html.ActionLink("Write new article", "Create", "Article", new { userId = Session["userId"]}, null)</a>
+            <button class="btn">@Html.ActionLink("Write new article", "Create", "Article", new { userId = Session["userId"] }, null)</button>
         }
     </div>
 
@@ -21,19 +21,19 @@
 @foreach (var article in Model.UserArticles)
 {
     <div class="row">
-        <div class="col-md-7">
-            <a href="#">
+        <a href="@Url.Action( "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)">
+            <div class="col-md-7">
                 <img class="img-responsive rounded mb-3 mb-md-0" src="@article.Picture" alt="">
-            </a>
-        </div>
-        <div class="col-md-5">
-            <h3>@article.Title</h3>
-            <p>@article.Intro</p>
-            <div class="text-truncate">
-                <p class="d-inline-block text-truncate" style="max-width: 350px;">@article.Text</p>
             </div>
-            <a>@Html.ActionLink("Read more", "Single", "Article", new { articleId = article.Id, userId = Session["userId"]}, null)</a>
-        </div>
+            <div class="col-md-5">
+
+                <h3>@article.Title</h3>
+                <p>@Html.Raw(article.Intro)</p>
+                <p>@Html.ActionLink("Read more", "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)</p>
+
+            </div>
+        </a>
     </div>
+
     <hr>
 }

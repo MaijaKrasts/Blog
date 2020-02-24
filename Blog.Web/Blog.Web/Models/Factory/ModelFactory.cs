@@ -1,5 +1,7 @@
 ﻿using Blog.Data.Entities;
 using Blog.Data.Entities.Services.Interfaces;
+using Blog.Logic.Const.Messages;
+using Blog.Logic.Const.Parameters;
 using Blog.Web.Models.Admin;
 using Blog.Web.Models.Article;
 using Blog.Web.Models.User;
@@ -10,15 +12,15 @@ namespace Blog.Web.Models.Factory
 {
     public class ModelFactory
     {
-        IUserService _user;
-        IArticleService _article;
-        ICommentService _comment;
+        IUserService _userService;
+        IArticleService _articleService;
+        ICommentService _commentService;
 
-        public ModelFactory(IArticleService article, IUserService user, ICommentService comment)
+        public ModelFactory(IArticleService articleService, IUserService userService, ICommentService commentService)
         {
-            _user = user;
-            _comment = comment;
-            _article = article;
+            _userService = userService;
+            _commentService = commentService;
+            _articleService = articleService;
         }
 
         public MultipleArticleModel MultipleArticleModel()
@@ -26,10 +28,10 @@ namespace Blog.Web.Models.Factory
 
             MultipleArticleModel model = new MultipleArticleModel()
             {
-                LatestArticle = _article.GetLatest(),
-                FewArticles = _article.GetNumOf(4),
-                HighestRated = _article.GetHighestRated(3),
-                LastCommented = _article.GetLastCommented(3),
+                LatestArticle = _articleService.GetLatest(),
+                FewArticles = _articleService.GetNumOf(Values.Four),
+                HighestRated = _articleService.GetHighestRated(Values.Three),
+                LastCommented = _articleService.GetLastCommented(Values.Three),
             };
 
             return model;
@@ -38,15 +40,15 @@ namespace Blog.Web.Models.Factory
         public SingleArticleModel SingleArticleModel(int articleId, int? userId)
         {
             Data.Entities.User user = null;
-            Data.Entities.Article article = _article.Get(articleId);
-            List<Comment> comments = _comment.GetForArticle(articleId);
+            Data.Entities.Article article = _articleService.Get(articleId);
+            List<Comment> comments = _commentService.GetForArticle(articleId);
            if (userId != null)
             {
                 int id = userId.GetValueOrDefault();
-                user = _user.Get(id);
+                user = _userService.Get(id);
             }
 
-            List<Data.Entities.User> users = _user.GetAll();
+            List<Data.Entities.User> users = _userService.GetAll();
 
             SingleArticleModel model = new SingleArticleModel();
             model.Article = article;
@@ -59,7 +61,7 @@ namespace Blog.Web.Models.Factory
 
         public ArticleModel ArticleModel(int Id)
         {
-            var article = _article.Get(Id);
+            var article = _articleService.Get(Id);
             ArticleModel model = new ArticleModel()
             {
                 AuthorId = article.AuthorId,
@@ -87,8 +89,8 @@ namespace Blog.Web.Models.Factory
         {
             UserArticleModel model = new UserArticleModel()
             {
-                UserArticles = _article.GetUserArticles(Id),
-                User = _user.Get(Id),
+                UserArticles = _articleService.GetUserArticles(Id),
+                User = _userService.Get(Id),
             };
 
             return model;
@@ -96,7 +98,7 @@ namespace Blog.Web.Models.Factory
 
         public UserModel UserModel(int Id)
         {
-            var user = _user.Get(Id);
+            var user = _userService.Get(Id);
 
             UserModel model = new UserModel()
             {
@@ -112,7 +114,7 @@ namespace Blog.Web.Models.Factory
 
         public UserModel UpdateUserModel(UserModel model)
         {
-            var currentUser = _user.Get(model.Id);
+            var currentUser = _userService.Get(model.Id);
             var fileName = currentUser.Picture;
 
             if (model.Picture != currentUser.Picture && model.Picture != null)
@@ -124,20 +126,20 @@ namespace Blog.Web.Models.Factory
             currentUser.Email = model.Email;
             currentUser.Picture = fileName;
 
-            _user.Update(currentUser);
+            _userService.Update(currentUser);
 
             return model;
         }
 
-        public Web.Models.Admin.AdminModel AdminModel()
+        public AdminModel AdminModel()
         {
             AdminModel model = new AdminModel()
             {
-                AllUsers = _user.GetAll(),
-                CommentingUsers = _user.GetAllCommenting(),
-                RatingUsers = _user.GetAllRating(),
-                WritingUsers = _user.GetAllWriting(),
-                Admins = _user.GetAllAdmins(),
+                AllUsers = _userService.GetAll(),
+                CommentingUsers = _userService.GetAllCommenting(),
+                RatingUsers = _userService.GetAllRating(),
+                WritingUsers = _userService.GetAllWriting(),
+                Admins = _userService.GetAllAdmins(),
             };
 
             return model;
@@ -146,7 +148,7 @@ namespace Blog.Web.Models.Factory
 
         public ArticleModel UpdateArticleModel(ArticleModel model)
         {
-            var currentArticle = _article.Get(model.Id);
+            var currentArticle = _articleService.Get(model.Id);
             var fileName = currentArticle.Picture;
 
             if (model.Picture != currentArticle.Picture && model.Picture != null)
@@ -159,40 +161,31 @@ namespace Blog.Web.Models.Factory
             currentArticle.Text = model.Text;
             currentArticle.Picture = fileName;
 
-            _article.Update(currentArticle);
+            _articleService.Update(currentArticle);
 
             return model;
         }
 
         public Data.Entities.User CreateUserFromModel(UserDataModel model)
         {
-            var password = _user.SavePassword(model.Password);
+            var password = _userService.SavePassword(model.Password);
 
-            string uniqueFileName = "/uploads/default-user.png";
+            string uniqueFileName = Links.DefaultUserPic;
 
             var user = new Data.Entities.User()
             {
                 Name = model.Name,
                 Email = model.Email,
                 Password = password,
-                Picture = "/uploads/" + uniqueFileName,
+                Picture = Links.Uploads + uniqueFileName,
             };
 
-            _user.Create(user);
+            _userService.Create(user);
             return user;
         }
 
         public Data.Entities.Article CreateArticleFromModel(ArticleModel model)
         {
-            string uniqueFileName = "empty";
-            //if (model.UpdatedPicture != null)
-            //{
-            //    uniqueFileName = _file.GetUniqueFileName(model.UpdatedPicture.FileName);
-            //    var uploads = Path.Combine(hostingEnvironment.WebRootPath, "uploads");
-            //    var filePath = Path.Combine(uploads, uniqueFileName);
-            //    model.UpdatedPicture.CopyTo(new FileStream(filePath, FileMode.Create));
-            //}
-
             Data.Entities.Article article = new Data.Entities.Article()
             {
                 Id = model.Id,
@@ -202,10 +195,10 @@ namespace Blog.Web.Models.Factory
                 Text = model.Text,
                 Title = model.Title,
                 CreatedOn = DateTime.Now,
-                Rating = 0,
+                Rating = Values.Zero,
             };
 
-            _article.Create(article);
+            _articleService.Create(article);
 
             return article;
         }

@@ -161,7 +161,7 @@
     <Compile Include="Models\Article\SingleArticleModel.cs" />
     <Compile Include="Models\Article\UserArticleModel.cs" />
     <Compile Include="Models\Factory\ModelFactory.cs" />
-    <Compile Include="Models\Service\ModelService.cs" />
+    <Compile Include="ModelRepository\ModelRepository.cs" />
     <Compile Include="Models\User\ErrorViewModel.cs" />
     <Compile Include="Models\User\UserDataModel.cs" />
     <Compile Include="Models\User\UserModel.cs" />
@@ -175,8 +175,12 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\AjaxAdmin.js" />
+    <Content Include="Scripts\AjaxSingle.js" />
+    <Content Include="Scripts\ArticleScript.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -213,7 +217,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\App_LocalResources\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>

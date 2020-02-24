@@ -10,37 +10,43 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
-<fieldset>
-    <legend>Image</legend>
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Picture)
-        <img src="@Model.Picture" alt="" />
-    </div>
-    <div class="editor-field">
-        <input id="ImagePath" title="Upload profile image"
-               type="file" name="file" />
-    </div>
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Title)
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Title)
-    </div>
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Intro)
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Intro)
-    </div>
-    <div class="editor-label">
-        @Html.LabelFor(model => model.Text)
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Text)
-    </div>
-    <div class="col-sm-offset-2 col-sm-10">
-        <input type="submit" vaue="Save" />
-    </div>
+    <fieldset>
+        <legend>Image</legend>
+        <div class="editor-label">
+            <img src="@Model.Picture" alt="" />
+        </div>
+        <div class="editor-field">
+            <input id="ImagePath" title="Upload profile image"
+                   type="file" name="file" />
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Title)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Intro)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Intro)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Text)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Text)
+        </div>
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" vaue="Save" />
+        </div>
 
-</fieldset>
+    </fieldset>
+
 }
+
+<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+<script src="@Url.Content("/Scripts/ArticleScript.js")"></script>
+
+
+

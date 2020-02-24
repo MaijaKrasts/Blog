@@ -1,23 +1,25 @@
 ﻿@model List<Blog.Data.Entities.Article>
 @{
-     ViewBag.Title = "AllArticles";
+    ViewBag.Title = "AllArticles";
 }
 
 <h1 class="my-4">
     All articles
 </h1>
 
-<div class="row">
-    @foreach (var article in Model)
-    {
-        <div class="col-lg-6 mb-4">
-                <img class="img-responsive" src="@article.Picture" alt="">
-                    <h4>
-                        @article.Title
-                    </h4>
-                    <p>@article.Intro</p>
-                    <a>@Html.ActionLink("Read more", "Single", "Article", new { articleId = article.Id, userId = Session["userId"]}, null)</a>               
-        </div>
 
-    }
+@foreach (var article in Model)
+{
+<div class="row">
+    <div>
+        <a href="@Url.Action( "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)">
+                <img class="img-responsive col-md-6" src="@article.Picture" alt="">
+                <h4>
+                    @article.Title
+                </h4>
+                <p>@Html.Raw(article.Intro)</p>
+                <p>@Html.ActionLink("Read more", "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)</p>
+        </a>
+    </div>
 </div>
+}

@@ -7,46 +7,46 @@
         <img class="img-responsive" src="@Model.Article.Picture" />
 
         <h2>@Model.Article.Title</h2>
-        <p class="singleIntro"><b>@Model.Article.Intro</b></p>
-        <p class="singleText">@Model.Article.Text</p>
-    </div>
+        <span>@Html.Raw(Model.Article.Intro)</span>
+        <p class="singleText">@Html.Raw(Model.Article.Text)</p>
+</div>
     <div class="col-2">
         @if (Model.User != null && Model.Article.AuthorId == Model.User.Id)
-        { 
-        <a>@Html.ActionLink("Edit", "Edit", "Article", new { Id = Model.Article.Id }, null)</a>
-        <a>@Html.ActionLink("Delete", "Delete", "Article", new { Id = Model.Article.Id }, null)</a>
+        {
+            <button class="btn">@Html.ActionLink("Edit", "Edit", "Article", new { Id = Model.Article.Id }, null)</button>
+            <button class="btn">@Html.ActionLink("Delete", "Delete", "Article", new { Id = Model.Article.Id }, null)</button>
         }
     </div>
 </div>
 
 
-<div class="row bootstrap snippets">
+<div class="col-md-12">
     <div class="col-md-6 col-md-offset-2 col-sm-6">
-        <div class="comment-wrapper">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3>Comment panel</h3>
-                </div>
-                <form class="panel-body">
-                    @if (Model.User != null && Model.User.CanComment != 0)
-                    {
-                        <span id="result1"></span>
-                        <input id="Comment" class="form-control" placeholder="write a comment..." rows="3" />
-                        <input type="hidden" id="ArticleId" value="@Model.Article.Id" />
-                        <input type="hidden" id="UserId" value="@Model.User.Id" />
-                        <br>
-                        <input type="button" class="btn btn-outline-dark" value="Post" id="buttonComment" />
-                        <div class="clearfix"></div>
-                        <hr>
-                    }
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3>Comment panel</h3>
+            </div>
+            <form class="panel-body">
+                @if (Model.User != null && Model.User.CanComment != 0)
+                {
+                    <span id="result1"></span>
+                    <input id="Comment" class="form-control" placeholder="write a comment..." rows="3" />
+                    <input type="hidden" id="ArticleId" value="@Model.Article.Id" />
+                    <input type="hidden" id="UserId" value="@Model.User.Id" />
+                    <br>
+                    <input type="button" class="btn btn-outline-dark" value="Post" id="buttonComment" />
+                    <div class="clearfix"></div>
+                    <hr>
+                }
 
-                    <ul class="media-list">
+                <div class="comment-wrapper">
+                    <ul class="list-unstyled">
                         @if (Model.Comments != null)
                         {
                             foreach (var comment in Model.Comments)
                             {
-                                <li class="media">
-                                    <div class="media-body">
+                                <li>
+                                    <div>
                                         <input type="hidden" id="CommentId" value="@comment.Id" />
                                         @if (comment.Reported != 0)
                                         {
@@ -64,7 +64,7 @@
                                                 <a class="pull-right" id="buttonReport" href="#"><small> Report </small></a>
                                             }
                                         }
-                                        @if (Model.User != null && Model.User.Id == comment.AuthorId || Model.User.Role != 0)
+                                        @if (Model.User != null && (Model.User.Id == comment.AuthorId || Model.User.Role != 0))
                                         {
                                             if (Model.User.Role == 0)
                                             {
@@ -85,8 +85,8 @@
                             }
                         }
                     </ul>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
     <div class="col-md-6 col-md-offset-2 col-sm-6">
@@ -94,8 +94,8 @@
         <p id="rating">@Model.Article.Rating</p>
         @if (Model.User != null && Model.User.CanRate != 0)
         {
-            <a id="buttonRatePlus" value="1">+</a>
-            <a id="buttonRateMinus">-</a>
+            <a id="buttonRatePlus" class="btn">+</a>
+            <a id="buttonRateMinus" class="btn">-</a>
             <input type="hidden" id="RatePlus" value="1" />
             <input type="hidden" id="RateMinus" value="0" />
             <input type="hidden" id="ArticleId" value="@Model.Article.Id" />
@@ -103,96 +103,6 @@
 
     </div>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $('#buttonComment').click(function () {
-            var ArticleId = $('#ArticleId').val();
-            var UserId = $('#UserId').val();
-            var Comment = $('#Comment').val();
-            $.ajax({
-                url: '/Article/WriteComment/',
-                type: 'POST',
-                datatype: "JSON",
-                data: {articleId: ArticleId, userId: UserId, comment: Comment},
-                success: function (result) {
-                    $('#result1').html(result);
-                }
-            });
-        });
-    //bug: grabs only the first comment to delete-->
-        $('#buttonDeleteComment').click(function () {
-            var CommentId = $('#CommentId').val();
-            $.ajax({
-                url: '/Article/DeleteComment/',
-                type: 'POST',
-                datatype: "JSON",
-                data: {commentId: CommentId},
-                success: function (result) {
-                    $('#result1').html(result);
-                }
-            });
-        });
-
-        $('#buttonRatePlus').click(function () {
-            var ArticleId = $('#ArticleId').val();
-            var RateValue = $('#RatePlus').val();
-
-            $.ajax({
-                url: '/Article/RateArticle/',
-                type: 'POST',
-                datatype: "JSON",
-                data: {articleId: ArticleId, rateValue: RateValue},
-                success: function (result) {
-                    $('#result1').html(result);
-                }
-            });
-        });
-
-        $('#buttonRateMinus').click(function () {
-            var ArticleId = $('#ArticleId').val();
-            var RateValue = $('#RateMinus').val();
-
-            $.ajax({
-                url: '/Article/RateArticle/',
-                type: 'POST',
-                datatype: "JSON",
-                data: {articleId: ArticleId, rateValue: RateValue},
-                success: function (result) {
-                    $('#result1').html(result);
-                }
-            });
-        });
-
-        //bug: grabs only the first comment to report-->
-        $('#buttonReport').click(function () {
-            var CommentId = $('#CommentId').val();
-            $.ajax({
-                url: '/Article/ReportComment/',
-                type: 'POST',
-                datatype: "JSON",
-                data: {commentId: CommentId},
-                success: function (result) {
-                    $('#result1').html(result);
-                }
-            });
-        });
-
-        //bug: grabs only the first comment to keep-->
-        $('#buttonKeepReported').click(function () {
-            var CommentId = $('#CommentId').val();
-            $.ajax({
-                url: '/Article/KeepReportedComment/',
-                type: 'POST',
-                datatype: "JSON",
-                data: {commentId: CommentId},
-                success: function (result) {
-                    $('#result1').html(result);
-                }
-            });
-        });
-    });
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="@Url.Content("/Scripts/AjaxSingle.js")"></script>
 

@@ -1,64 +1,76 @@
 ﻿using Blog.Data.Entities.Services.Interfaces;
 using Blog.Data.Repositories.Interfaces;
+using Blog.Logic.Const.Parameters;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Helpers;
 
 namespace Blog.Data.Entities.Services
 {
-    public class UserService :IUserService
+    public class UserService : IUserService
     {
-        private IUserRepository _user;
-        public UserService(IUserRepository user)
+        private IUserRepository _userRepository;
+        public UserService(IUserRepository userRepository)
         {
-            _user = user;
+            _userRepository = userRepository;
         }
         public User Create(User user)
         {
-            return _user.Create(user);
+            return _userRepository.Create(user);
         }
         public User Get(int id)
         {
-            return _user.Get(id);
+            return _userRepository.Get(id);
         }
 
         public List<User> GetAll()
         {
-            return _user.GetAll();
+            return _userRepository.GetAll();
         }
 
         public void Update(User user)
         {
-            _user.Update(user);
+            _userRepository.Update(user);
         }
         public User GetByEmailAndPassword(string email, string password)
         {
-            return _user.GetAll().FirstOrDefault(u => u.Email == email && u.Password == password);
+            return _userRepository.GetAll()
+                .FirstOrDefault(u => u.Email == email && u.Password == password);
         }
 
         public User GetByEmail(string email)
         {
-            return _user.GetAll().FirstOrDefault(u => u.Email == email);
+            return _userRepository.GetAll()
+                .FirstOrDefault(u => u.Email == email);
         }
 
         public List<User> GetAllCommenting()
         {
-            return _user.GetAll().Where(u => u.CanComment == 1).ToList();
+            return _userRepository.GetAll()
+                .Where(u => u.CanComment == Values.One)
+                .ToList();
         }
 
         public List<User> GetAllRating()
         {
-            return _user.GetAll().Where(u => u.CanRate == 1).ToList();
+            return _userRepository.GetAll()
+                .Where(u => u.CanRate == Values.One)
+                .ToList();
         }
 
         public List<User> GetAllWriting()
         {
-            return _user.GetAll().Where(u => u.CanWrite == 1).ToList();
+            return _userRepository.GetAll()
+                .Where(u => u.CanWrite == Values.One)
+                .ToList();
         }
 
         public List<User> GetAllAdmins()
         {
-            return _user.GetAll().Where(u => u.Role == 1).ToList();
+            return _userRepository
+                .GetAll()
+                .Where(u => u.Role == Values.One)
+                .ToList();
         }
 
         public string SavePassword(string unhashedPassword)
@@ -69,16 +81,19 @@ namespace Blog.Data.Entities.Services
         public bool CheckPasswordByEmail(string email, string unhashedPassword)
         {
             var user = GetByEmail(email);
-            string savedHashedPassword = user.Password;
-
-            return Crypto.VerifyHashedPassword(savedHashedPassword, unhashedPassword);
+            if (user != null)
+            {
+                string savedHashedPassword = user.Password;
+                return Crypto.VerifyHashedPassword(savedHashedPassword, unhashedPassword);
+            }
+            else return false;
         }
 
         public User UpdateUserCanWriteStatuss(string email)
         {
             var user = GetByEmail(email);
-            user.CanWrite = 1;
-            _user.Update(user);
+            user.CanWrite = Values.One;
+            _userRepository.Update(user);
 
             return user;
         }
@@ -86,8 +101,11 @@ namespace Blog.Data.Entities.Services
         public User UpdateUserCanCommentStatuss(string email)
         {
             var user = GetByEmail(email);
-            user.CanComment = 1;
-            _user.Update(user);
+            if (user != null)
+            {
+                user.CanComment = Values.One;
+                _userRepository.Update(user);
+            }
 
             return user;
         }
@@ -95,19 +113,25 @@ namespace Blog.Data.Entities.Services
         public User UpdateUserCanRateStatuss(string email)
         {
             var user = GetByEmail(email);
-            user.CanRate = 1;
-            _user.Update(user);
+            if (user != null)
+            {
+                user.CanRate = Values.One;
+                _userRepository.Update(user);
+            }
 
             return user;
         }
 
         public User UpdateUserCanWriteStatussId(int id)
         {
-            var user = _user.Get(id);
-            user.CanWrite = 1;
-            _user.Update(user);
-
+            var user = _userRepository.Get(id);
+            if (user != null)
+            {
+                user.CanWrite = Values.One;
+                _userRepository.Update(user);
+            }
             return user;
         }
+
     }
 }

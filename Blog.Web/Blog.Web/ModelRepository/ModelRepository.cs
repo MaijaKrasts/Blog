@@ -2,17 +2,13 @@
 using Blog.Web.Models.Article;
 using Blog.Web.Models.Factory;
 using Blog.Web.Models.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace Blog.Web.Models.Service
+namespace Blog.Web.Models.ModelRepository
 {
-    public class ModelService
+    public class ModelRepository
     {
         private ModelFactory _factory;
-        public ModelService(ModelFactory factory)
+        public ModelRepository(ModelFactory factory)
         {
             _factory = factory;
         }

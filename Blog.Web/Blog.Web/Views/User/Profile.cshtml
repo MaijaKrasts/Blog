@@ -2,9 +2,7 @@
 @{
     ViewBag.Title = "Profile";
 }
-<div>
-
-</div>
+<br />
     <div class="row">
         <div class="col-md-2">
             <div class="profile-img">
@@ -31,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="btn col-md-2">
             @Html.ActionLink("Edit profile", "EditProfile", "User", new { Id = Model.Id}, null)
         </div>
     </div>

@@ -10,7 +10,7 @@
         <div class="col-md-3">
             <fieldset>
                 <legend><small><b>Grant writing option</b></small></legend>
-                <input type="text" id="emailWrite" placeholder="User email"/>
+                <input type="text" id="emailWrite" placeholder="User email" />
                 <input type="button" value="Grant" id="buttonWrite" />
                 <br />
             </fieldset>
@@ -37,12 +37,12 @@
                 <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     All user emails
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     @foreach (var user in Model.AllUsers)
                     {
-                        <a class="dropdown-item">@user.Email</a>
+                        <li>@user.Email</li>
                     }
-                </div>
+                </ul>
             </div>
         </div>
 
@@ -59,7 +59,6 @@
                         <li>@user.Name</li>
                     }
                 </ul>
-                <span id="result1"></span>
             </div>
         </div>
         <div class="col-md-3">
@@ -82,65 +81,16 @@
                         <li>@user.Name</li>
                     }
                 </ul>
-                <div>
-                    <span id="result3"></span>
-                </div>
             </div>
         </div>
     </div>
-    <br />
     <span id="result1"></span>
+    <br />
 }
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $('#buttonWrite').click(function () {
-            var Email = $('#emailWrite').val();
-            $.ajax({
-                url: "/Admin/GrantWriteAccess/",
-                type: "POST",
-                datatype: "JSON",
-                data: {email: Email},
-                success: function (result) {
-                    $('#result1').html(result);
-                }
-            });
-            location.reload();
-        });
-
-        $('#buttonComment').click(function () {
-            var Email = $('#emailComment').val();
-            $.ajax({
-                 url: '/Admin/GrantCommentAccess/',
-                type: 'POST',
-                datatype: "JSON",
-                 data: {email: Email},
-                success: function (result) {
-                    $('#result1').html(result);
-                }
-            });
-            location.reload();
-        });
-
-        $('#buttonRate').click(function (e) {
-            e.preventDefault()
-            var Email = $('#emailRate').val();
-            $.ajax({
-                url: '/Admin/GrantRateAccess/',
-                type: 'POST',
-                datatype: "JSON",
-                data: {email: Email},
-                success: function (result) {
-                    $('#result1').html(result);
-                }
-            });
-            location.reload();
-        });
-    });
-</script>
+<script src="@Url.Content("/Scripts/AjaxAdmin.js")"></script>
 
 
 

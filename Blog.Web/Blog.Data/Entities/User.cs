@@ -17,7 +17,6 @@ namespace Blog.Data.Entities
         public int CanComment { get; set; }
 
         public int CanRate { get; set; }
-
         public int CanWrite { get; set; }
     }
 }

@@ -1,20 +1,20 @@
-﻿using Blog.Web.Models.Service;
+﻿using Blog.Web.Models.ModelRepository;
 using System.Web.Mvc;
 
 namespace Blog.Web.Controllers
 {
     public class HomeController : Controller
     {
-            private ModelService _model;
+            private ModelRepository _modelRepository;
 
-            public HomeController(ModelService model)
+            public HomeController(ModelRepository modelRepository)
             {
-                _model = model;
+                _modelRepository = modelRepository;
             }
 
             public ActionResult Index()
             {
-                return View(_model.CreateMultipleArticleModel());
+                return View(_modelRepository.CreateMultipleArticleModel());
             }
     }
 }

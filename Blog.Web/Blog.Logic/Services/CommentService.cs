@@ -1,21 +1,19 @@
-﻿using Blog.Data.Entities;
-using Blog.Data.Entities.Services.Interfaces;
+﻿using Blog.Data.Entities.Services.Interfaces;
 using Blog.Data.Repositories.Interfaces;
+using Blog.Logic.Const.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blog.Data.Entities.Services
 {
     public class CommentService :ICommentService
     {
-        private ICommentRepository _comment;
+        private ICommentRepository _commentRepository;
 
-        public CommentService(ICommentRepository comment)
+        public CommentService(ICommentRepository commentRepository)
         {
-            _comment = comment;
+            _commentRepository = commentRepository;
         }
         public Comment Create(int articleId, int userId, string text)
         {
@@ -27,62 +25,67 @@ namespace Blog.Data.Entities.Services
                 Text = text,
             };
 
-            _comment.Create(comment);
+            _commentRepository.Create(comment);
             return comment;
         }
 
         public Comment Get(int id)
         {
-            return _comment.Get(id);
+            return _commentRepository.Get(id);
         }
 
         public List<Comment> GetAll()
         {
-            return _comment.GetAll();
+            return _commentRepository.GetAll();
         }
 
         public void Update(Comment comment)
         {
-            _comment.Update(comment);
+            _commentRepository.Update(comment);
         }
 
         public void Delete(int id)
         {
-            _comment.Delete(id);
+            _commentRepository.Delete(id);
         }
         public List<Comment> GetForArticle(int articleId)
         {
-            var comments = _comment.GetAll().Where(c => c.ArticleId == articleId).OrderByDescending(c => c.CreatedOn).ToList();
+            var comments = _commentRepository.GetAll()
+                .Where(c => c.ArticleId == articleId)
+                .OrderByDescending(c => c.CreatedOn)
+                .ToList();
             return comments;
         }
 
         public List<Comment> GetForUser(int userId)
         {
-            var comments = _comment.GetAll().Where(c => c.AuthorId == userId).ToList();
+            var comments = _commentRepository.GetAll()
+                .Where(c => c.AuthorId == userId)
+                .ToList();
             return comments;
         }
 
         public List<Comment> GetLatest()
         {
-            return _comment.GetAll()
+            return _commentRepository.GetAll()
                 .OrderByDescending(c => c.CreatedOn)
                 .ToList();
         }
 
         public Comment ReportComment(int Id)
         {
-            var comment = _comment.Get(Id);
-            comment.Reported = 1;
-            _comment.Update(comment);
+            var comment = _commentRepository.Get(Id);
+            comment.Reported = Values.One;
+            _commentRepository.Update(comment);
 
             return comment;
         }
 
         public Comment KeepReported(int Id)
         {
-            var comment = _comment.Get(Id);
-            comment.Reported = 0;
-            _comment.Update(comment);
+            var comment = _commentRepository.Get(Id);
+            comment.Reported = Values.Zero;
+            _commentRepository.Update(comment);
 
             return comment;
         }

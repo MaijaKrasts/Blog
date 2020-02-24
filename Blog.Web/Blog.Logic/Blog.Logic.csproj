@@ -70,6 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Const\Messages\ErrorMessages.cs" />
+    <Compile Include="Const\Messages\Links.cs" />
+    <Compile Include="Const\Parameters\Values.cs" />
+    <Compile Include="Const\Parameters\SessionVariables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ArticleService.cs" />
     <Compile Include="Services\CommentService.cs" />
@@ -84,10 +87,7 @@
       <Name>Blog.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Const\Parameters\" />
-    <Folder Include="Validators\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

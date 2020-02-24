@@ -1,10 +1,8 @@
 ﻿using Blog.Data.Entities.Const.Messages;
 using Blog.Data.Entities.Services.Interfaces;
+using Blog.Logic.Const.Messages;
 using Blog.Web.Models.Article;
-using Blog.Web.Models.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Blog.Web.Models.ModelRepository;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,16 +10,16 @@ namespace Blog.Web.Controllers
 {
     public class ArticleController : Controller
     {
-        private IArticleService _article;
-        private ModelService _model;
-        private ICommentService _comment;
+        private IArticleService _articleService;
+        private ModelRepository _modelRepository;
+        private ICommentService _commentService;
 
-        public ArticleController(IArticleService article, ModelService model, ICommentService comment)
+        public ArticleController(IArticleService articleService, ModelRepository modelRepository, ICommentService commentService)
         {
 
-            _article = article;
-            _model = model;
-            _comment = comment;
+            _articleService = articleService;
+            _modelRepository = modelRepository;
+            _commentService = commentService;
         }
 
         public ActionResult Index()
@@ -31,43 +29,44 @@ namespace Blog.Web.Controllers
 
         public ActionResult AllArticles()
         {
-            return View(_article.GetAll());
+            return View(_articleService.GetAll());
         }
 
         public ActionResult MyArticles(int Id)
         {
-            return View(_model.CreateUserArticleModel(Id));
+            return View(_modelRepository.CreateUserArticleModel(Id));
         }
 
         public ActionResult Single(int articleId, int? userId)
         {
-            var model = _model.CreateSingleArticleModel(articleId, userId);
+            var model = _modelRepository.CreateSingleArticleModel(articleId, userId);
             return View(model);
         }
 
         public ActionResult Create(int userId)
         {
-            return View(_model.EmpthyArticleModel(userId));
+            return View(_modelRepository.EmpthyArticleModel(userId));
         }
 
         [HttpPost]
         public ActionResult Create(ArticleModel model, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && file != null)
             {
-                file.SaveAs(HttpContext.Server.MapPath("~/Uploads/") + file.FileName);
-                model.Picture = "/Uploads/" + file.FileName;
-                _model.CreateArticleFromModel(model);
+                file.SaveAs(HttpContext.Server.MapPath(Links.UploadRoute) + file.FileName);
+                model.Picture = Links.Uploads + file.FileName;
+                
+                _modelRepository.CreateArticleFromModel(model);
                 return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError("error", ErrorMessages.UploadError);
+            ModelState.AddModelError(ErrorMessages.Error, ErrorMessages.UploadError);
             return View(model);
         }
 
         public ActionResult Edit(int Id)
         {
-            return View(_model.CreateArticleModel(Id));
+            return View(_modelRepository.CreateArticleModel(Id));
         }
 
         [HttpPost]
@@ -77,57 +76,57 @@ namespace Blog.Web.Controllers
             {
                 if (file != null)
                 {
-                    file.SaveAs(HttpContext.Server.MapPath("~/Uploads/") + file.FileName);
-                    model.Picture = "/Uploads/" + file.FileName;
+                    file.SaveAs(HttpContext.Server.MapPath(Links.UploadRoute) + file.FileName);
+                    model.Picture = Links.Uploads + file.FileName;
                 }
 
-                _model.UpdateArticleModel(model);
+                _modelRepository.UpdateArticleModel(model);
                 return RedirectToAction("AllArticles", "Article");
             }
 
-            ModelState.AddModelError("error", ErrorMessages.UploadError);
+            ModelState.AddModelError(ErrorMessages.Error, ErrorMessages.UploadError);
             return View(model);
         }
 
         public ActionResult Delete(int Id)
         {
-            _article.DeleteWithComments(Id);
+            _articleService.DeleteWithComments(Id);
             return RedirectToAction("AllArticles", "Article");
         }
 
-        [Route("article/writecomment/{articleId}/{userId}/{comment}")]
+        [HttpPost]
         public ActionResult WriteComment(int articleId, int userId, string comment)
         {
-            _comment.Create(articleId, userId, comment);
-            return Json(new { ErrorMessages.CommentAdded });
+            _commentService.Create(articleId, userId, comment);
+            return Json(ErrorMessages.CommentAdded, comment);
         }
 
         [HttpPost]
         public JsonResult DeleteComment(int commentId)
         {
-            _comment.Delete(commentId);
-            return Json(new{ ErrorMessages.CommentDeleted});
+            _commentService.Delete(commentId);
+            return Json(ErrorMessages.CommentDeleted);
         }
 
         [HttpPost]
         public JsonResult ReportComment(int commentId)
         {
-            _comment.ReportComment(commentId);
-            return Json(new { ErrorMessages.CommentReported});
+            _commentService.ReportComment(commentId);
+            return Json(ErrorMessages.CommentReported);
         }
 
         [HttpPost]
         public JsonResult KeepReportedComment(int commentId)
         {
-            _comment.KeepReported(commentId);
-            return Json(new { ErrorMessages.CommentRestored });
+            _commentService.KeepReported(commentId);
+            return Json(ErrorMessages.CommentRestored);
         }
 
-        [Route("article/ratearticle/{articleId}/{rateValue}")]
+        [HttpPost]
         public ActionResult RateArticle(int articleId, int rateValue)
         {
-            _article.ChangeRating(articleId, rateValue);
-            return Json(new { _article.Get(articleId).Rating });
+            _articleService.ChangeRating(articleId, rateValue);
+            return Json(_articleService.Get(articleId).Rating);
         }
     }
 }

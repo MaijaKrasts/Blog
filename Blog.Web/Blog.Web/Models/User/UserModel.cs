@@ -14,5 +14,6 @@ namespace Blog.Web.Models.User
 
         [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$")]
         public string Picture { get; set; }
+
     }
 }

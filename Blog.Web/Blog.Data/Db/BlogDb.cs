@@ -18,5 +18,7 @@ namespace Blog.Data.Db
 
         public DbSet<Comment> Comment { get; set; }
 
+
+
     }
 }

@@ -7,30 +7,32 @@
 </h1>
 
 <div class="row">
-    <div class="col-md-8">
-        <img class="img-responsive" src="@Model.LatestArticle.Picture" alt="">
-    </div>
-    <div class="col-md-4">
-        <h3>@Model.LatestArticle.Title</h3>
-        <p>@Model.LatestArticle.Intro</p>
-        <div class="text-truncate">
-            <p class="d-inline-block text-truncate" style="max-width: 350px;">@Model.LatestArticle.Text</p>
+    <a href="@Url.Action( "Single", "Article", new { articleId = Model.LatestArticle.Id, userId = Session["userId"] }, null)">
+        <div class="col-md-8">
+            <img class="img-responsive" src="@Model.LatestArticle.Picture" alt="">
         </div>
-        <a>@Html.ActionLink("Read more", "Single", "Article", new { articleId = Model.LatestArticle.Id, userId = Session["userId"]}, null)</a>
-    </div>
+        <div class="col-md-4">
+
+            <h3>@Model.LatestArticle.Title</h3>
+            <p>@Html.Raw(Model.LatestArticle.Intro)</p>
+            <p>@Html.ActionLink("Read more", "Single", "Article", new { articleId = Model.LatestArticle.Id, userId = Session["userId"] }, null)</p>
+    </a>
 </div>
-<!-- /.row -->
+</div>
+
 <br />
 <br />
 <div class="row">
     @foreach (var article in Model.FewArticles)
     {
-        <div class="col-md-3 col-sm-6 mb-4">
-                <img class="img-responsive" src="@article.Picture" alt="">
-                <h5>
-                    @Html.ActionLink(article.Title, "Single", "Article", new { articleId = article.Id, userId = Session["userId"]}, null)
-                </h5>
-        </div>
+    <div class="col-md-3 col-sm-6 mb-4">
+        <a href="@Url.Action( "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)">
+            <img class="img-responsive" src="@article.Picture" alt="">
+            <h5>
+                @Html.ActionLink(article.Title, "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)
+            </h5>
+        </a>
+    </div>
     }
 </div>
 
@@ -48,13 +50,15 @@
         <div class="row">
             @foreach (var article in Model.HighestRated)
             {
-                <div class="col-md-4 col-sm-4 mb-auto">
-                        <img class="img-responsive" src="@article.Picture" alt="">
-                        <h6>
-                            @Html.ActionLink(article.Title, "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)
-                        </h6>
-                        <p><small>Article rating: @article.Rating</small></p>
-                </div>
+            <div class="col-md-4 col-sm-4 mb-auto">
+                <a href="@Url.Action( "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)">
+                    <img class="img-responsive" src="@article.Picture" alt="">
+                    <h6>
+                        @Html.ActionLink(article.Title, "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)
+                    </h6>
+                    <p><small>Article rating: @article.Rating</small></p>
+                </a>
+            </div>
             }
         </div>
     </div>
@@ -69,12 +73,14 @@
         <div class="row">
             @foreach (var article in Model.LastCommented)
             {
-                <div class="col-md-4 col-sm-4 mb-auto">
-                        <img class="img-responsive" src="@article.Picture" alt="">
-                        <h6>
-                            @Html.ActionLink(article.Title, "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)
-                        </h6>
-                </div>
+            <div class="col-md-4 col-sm-4 mb-auto">
+                <a href="@Url.Action( "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)">
+                    <img class="img-responsive" src="@article.Picture" alt="">
+                    <h6>
+                        @Html.ActionLink(article.Title, "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)
+                    </h6>
+                </a>
+            </div>
             }
         </div>
     </div>

@@ -1,7 +1,10 @@
 ﻿using Blog.Data.Entities.Const.Messages;
 using Blog.Data.Entities.Services.Interfaces;
-using Blog.Web.Models.Service;
+using Blog.Logic.Const.Messages;
+using Blog.Logic.Const.Parameters;
+using Blog.Web.Models.ModelRepository;
 using Blog.Web.Models.User;
+using System;
 using System.Web;
 using System.Web.Mvc;
 
@@ -9,13 +12,13 @@ namespace Blog.Web.Controllers
 {
     public class UserController : Controller
     {
-        private ModelService _model;
-        private IUserService _user;
+        private ModelRepository _modelRepository;
+        private IUserService _userService;
 
-        public UserController(ModelService model, IUserService user)
+        public UserController(ModelRepository modelRepository, IUserService userService)
         {
-            _model = model;
-            _user = user;
+            _modelRepository = modelRepository;
+            _userService = userService;
         }
 
         public ActionResult SignIn()
@@ -30,25 +33,25 @@ namespace Blog.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                bool isPassAndEmailValid = _user.CheckPasswordByEmail(signInmodel.Email, signInmodel.Password);
+                bool isPassAndEmailValid = _userService.CheckPasswordByEmail(signInmodel.Email, signInmodel.Password);
 
                 if (isPassAndEmailValid == false)
                 {
-                    ModelState.AddModelError("error", ErrorMessages.EmailWrong);
+                    ModelState.AddModelError(ErrorMessages.Error, ErrorMessages.EmailWrong);
                 }
                 else
                 {
-                    var user = _user.GetByEmail(signInmodel.Email);
+                    var user = _userService.GetByEmail(signInmodel.Email);
 
-                    Session.Add("userId", user.Id);
-                    Session.Add("userName", user.Name);
-                    if(user.Role == 1)
+                    Session.Add(SessionVariables.UserId, user.Id);
+                    Session.Add(SessionVariables.UserName, user.Name);
+                    if(user.Role == SessionVariables.True)
                     {
-                        Session.Add("userRole", user.Role);
+                        Session.Add(SessionVariables.UserRole, user.Role);
                     }
                     else
                     {
-                        Session.Add("userRole", null);
+                        Session.Add(SessionVariables.UserRole, null);
                     }
                     TempData["message"] = ErrorMessages.AccountCreated;
                     return RedirectToAction("Index", "Home");
@@ -68,13 +71,13 @@ namespace Blog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_user.GetByEmail(model.Email) != null)
+                if (_userService.GetByEmail(model.Email) != null)
                 {
-                    ModelState.AddModelError("error", ErrorMessages.EmailExists);
+                    ModelState.AddModelError(ErrorMessages.Error, ErrorMessages.EmailExists);
                 }
                 else
                 {
-                    _model.CreateUserFromModel(model);
+                    _modelRepository.CreateUserFromModel(model);
                     TempData["message"] = ErrorMessages.AccountCreated;
                     return RedirectToAction("SignIn");
                 }
@@ -85,32 +88,35 @@ namespace Blog.Web.Controllers
 
         public ActionResult Profile(int Id)
         {
-            return View(_user.Get(Id));
+            if (Convert.ToInt32(Session[SessionVariables.UserId]) == Id)
+            {
+                return View(_userService.Get(Id));
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult EditProfile(int Id)
         {
-            return View(_model.CreateUserModel(Id));
+            return View(_modelRepository.CreateUserModel(Id));
         }
 
         [HttpPost]
         public ActionResult EditProfile(UserModel model, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
-            {if (file != null)
+            {
+                if (file != null)
                 {
-                    file.SaveAs(HttpContext.Server.MapPath("~/Uploads/") + file.FileName);
-                    model.Picture = "/Uploads/" + file.FileName;
+                    file.SaveAs(HttpContext.Server.MapPath(Links.UploadRoute) + file.FileName);
+                    model.Picture = Links.Uploads + file.FileName;
                 }
-
-                _model.UpdateUserModel(model);
+                _modelRepository.UpdateUserModel(model);
                 return RedirectToAction(nameof(Profile), new { Id = model.Id });
-
             }
 
-            ModelState.AddModelError("error", ErrorMessages.UploadError);
+            ModelState.AddModelError(ErrorMessages.Error, ErrorMessages.UploadError);
             return View(model);
-        }
+        }        
 
         public ActionResult SignOut()
         {
