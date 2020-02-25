@@ -2,7 +2,7 @@
 using Blog.Data.Entities.Services.Interfaces;
 using Blog.Logic.Const.Messages;
 using Blog.Logic.Const.Parameters;
-using Blog.Web.Models.ModelRepository;
+using Blog.Web.ModelRepository;
 using Blog.Web.Models.User;
 using System;
 using System.Web;
@@ -12,10 +12,10 @@ namespace Blog.Web.Controllers
 {
     public class UserController : Controller
     {
-        private ModelRepository _modelRepository;
+        private IModelRepository _modelRepository;
         private IUserService _userService;
 
-        public UserController(ModelRepository modelRepository, IUserService userService)
+        public UserController(IModelRepository modelRepository, IUserService userService)
         {
             _modelRepository = modelRepository;
             _userService = userService;

@@ -1,0 +1,36 @@
+﻿@model Blog.Web.Models.User.UserModel
+@{
+    ViewBag.Title = "EditProfile";
+}
+@using (Html.BeginForm("EditProfile", "User", null, FormMethod.Post,
+                              new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <fieldset>
+        <legend>Image</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Picture)
+        </div>
+        <div class="editor-field">
+            <input id="ImagePath" title="Upload profile image"
+                   type="file" name="file" />
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+        </div>
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" vaue="Save" />
+        </div>
+        
+    </fieldset>
+}

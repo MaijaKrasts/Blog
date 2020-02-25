@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Blog </title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Articles", "AllArticles", "Article")</li>
+
+                    @if (Session["userId"] != null)
+                    {
+                        <li>@Html.ActionLink("My articles", "MyArticles", "Article", new { Id = Session["userId"] }, null)</li>
+                        <li>@Html.ActionLink("My profile", "Profile", "User", new { Id = Session["userId"] }, null)</li>
+                        <li>@Html.ActionLink("Sign out", "SignOut", "User")</li>
+                        if (Session["userRole"] != null)
+                        {
+                            <li>@Html.ActionLink("Admin panel", "AdminIndex", "Admin")</li>
+                        }
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Sign in", "SignIn", "User")</li>
+                        <li>@Html.ActionLink("Sign up", "SignUp", "User")</li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

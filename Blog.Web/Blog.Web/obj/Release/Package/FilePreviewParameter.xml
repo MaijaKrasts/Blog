@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="Default Web Site/blog" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\m\.krastina\\source\\repos\\Blog\\Blog\.Web\\Blog\.Web\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\m\.krastina\\source\\repos\\Blog\\Blog\.Web\\Blog\.Web\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="BlogDb-Web.config Connection String" description="" value="Data Source=localhost;Initial Catalog=BlogDb;Integrated Security=True" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\m\.krastina\\source\\repos\\Blog\\Blog\.Web\\Blog\.Web\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='BlogDb']/@connectionString" />
+  </parameter>
+</parameters>

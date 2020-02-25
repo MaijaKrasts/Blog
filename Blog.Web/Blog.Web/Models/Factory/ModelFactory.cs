@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Blog.Web.Models.Factory
 {
-    public class ModelFactory
+    public class ModelFactory : IModelFactory
     {
         IUserService _userService;
         IArticleService _articleService;

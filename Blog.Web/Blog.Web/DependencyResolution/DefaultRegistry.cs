@@ -32,7 +32,7 @@ namespace Blog.Web.DependencyResolution {
                     scan.Assembly("Blog.Data");
                     scan.Assembly("Blog.Logic");
                     scan.WithDefaultConventions();
-					scan.With(new ControllerConvention());
+
                 });
             //For<IExample>().Use<Example>();
             For<DbContext>().Use(() => new DbContext("BlogDb"));

@@ -1,0 +1,108 @@
+﻿@model Blog.Web.Models.Article.SingleArticleModel
+@{
+    ViewBag.Title = "Single";
+}
+<div class="row">
+    <div class="col-8">
+        <img class="img-responsive" src="@Model.Article.Picture" />
+
+        <h2>@Model.Article.Title</h2>
+        <span>@Html.Raw(Model.Article.Intro)</span>
+        <p class="singleText">@Html.Raw(Model.Article.Text)</p>
+</div>
+    <div class="col-2">
+        @if (Model.User != null && Model.Article.AuthorId == Model.User.Id)
+        {
+            <button class="btn">@Html.ActionLink("Edit", "Edit", "Article", new { Id = Model.Article.Id }, null)</button>
+            <button class="btn">@Html.ActionLink("Delete", "Delete", "Article", new { Id = Model.Article.Id }, null)</button>
+        }
+    </div>
+</div>
+
+
+<div class="col-md-12">
+    <div class="col-md-6 col-md-offset-2 col-sm-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3>Comment panel</h3>
+            </div>
+            <form class="panel-body">
+                @if (Model.User != null && Model.User.CanComment != 0)
+                {
+                    <span id="result1"></span>
+                    <input id="Comment" class="form-control" placeholder="write a comment..." rows="3" />
+                    <input type="hidden" id="ArticleId" value="@Model.Article.Id" />
+                    <input type="hidden" id="UserId" value="@Model.User.Id" />
+                    <br>
+                    <input type="button" class="btn btn-outline-dark" value="Post" id="buttonComment" />
+                    <div class="clearfix"></div>
+                    <hr>
+                }
+
+                <div class="comment-wrapper">
+                    <ul class="list-unstyled">
+                        @if (Model.Comments != null)
+                        {
+                            foreach (var comment in Model.Comments)
+                            {
+                                <li>
+                                    <div>
+                                        <input type="hidden" id="CommentId" value="@comment.Id" />
+                                        @if (comment.Reported != 0)
+                                        {
+                                            <span class="badge badge-danger">Reported</span>
+                                        }
+
+                                        @foreach (var user in Model.Users.Where(u => u.Id == comment.AuthorId))
+                                        {
+                                            <a class="pull-left">
+                                                <img class="col-md-1 img-responsive" src="@user.Picture" alt="" class="img-circle">
+                                            </a>
+                                            <strong class="text-success">@user.Name</strong>
+                                            if (comment.Reported == 0)
+                                            {
+                                                <a class="pull-right" id="buttonReport" href="#"><small> Report </small></a>
+                                            }
+                                        }
+                                        @if (Model.User != null && (Model.User.Id == comment.AuthorId || Model.User.Role != 0))
+                                        {
+                                            if (Model.User.Role == 0)
+                                            {
+                                                <a class="pull-right" href="#"><small> Edit </small></a>
+                                            }
+                                            else if (Model.User.Role == 1 && comment.Reported == 1)
+                                            {
+                                                <a class="pull-right" id="buttonKeepReported" href="#"><small> Keep </small></a>
+                                            }
+
+                                            <a class="pull-right" id="buttonDeleteComment" href="#"><small> Delete </small></a>
+                                        }
+                                        <p class="comment-text">
+                                            @comment.Text
+                                        </p>
+                                    </div>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6 col-md-offset-2 col-sm-6">
+        <h6>Rating:</h6>
+        <p id="rating">@Model.Article.Rating</p>
+        @if (Model.User != null && Model.User.CanRate != 0)
+        {
+            <a id="buttonRatePlus" class="btn">+</a>
+            <a id="buttonRateMinus" class="btn">-</a>
+            <input type="hidden" id="RatePlus" value="1" />
+            <input type="hidden" id="RateMinus" value="0" />
+            <input type="hidden" id="ArticleId" value="@Model.Article.Id" />
+        }
+
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="@Url.Content("/Scripts/AjaxSingle.js")"></script>
+

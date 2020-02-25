@@ -1,14 +1,16 @@
-﻿using Blog.Web.Models.Admin;
+﻿using Blog.Web.ModelRepository;
+using Blog.Web.Models.Admin;
 using Blog.Web.Models.Article;
 using Blog.Web.Models.Factory;
 using Blog.Web.Models.User;
 
 namespace Blog.Web.Models.ModelRepository
 {
-    public class ModelRepository
+    public class ModelRepository : IModelRepository
+
     {
-        private ModelFactory _factory;
-        public ModelRepository(ModelFactory factory)
+        private IModelFactory _factory;
+        public ModelRepository(IModelFactory factory)
         {
             _factory = factory;
         }

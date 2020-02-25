@@ -155,11 +155,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ModelRepository\IModelRepository.cs" />
     <Compile Include="Models\Admin\AdminModel.cs" />
     <Compile Include="Models\Article\ArticleModel.cs" />
     <Compile Include="Models\Article\MultipleArticleModel.cs" />
     <Compile Include="Models\Article\SingleArticleModel.cs" />
     <Compile Include="Models\Article\UserArticleModel.cs" />
+    <Compile Include="Models\Factory\IModelFactory.cs" />
     <Compile Include="Models\Factory\ModelFactory.cs" />
     <Compile Include="ModelRepository\ModelRepository.cs" />
     <Compile Include="Models\User\ErrorViewModel.cs" />
@@ -214,6 +216,9 @@
     <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\User\SignIn.cshtml" />
     <Content Include="Views\User\SignUp.cshtml" />
+    <None Include="Web.CustomProfile.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

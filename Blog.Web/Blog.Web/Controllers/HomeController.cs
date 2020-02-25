@@ -1,13 +1,14 @@
-﻿using Blog.Web.Models.ModelRepository;
+﻿using Blog.Web.ModelRepository;
+using Blog.Web.Models.ModelRepository;
 using System.Web.Mvc;
 
 namespace Blog.Web.Controllers
 {
     public class HomeController : Controller
     {
-            private ModelRepository _modelRepository;
+            private IModelRepository _modelRepository;
 
-            public HomeController(ModelRepository modelRepository)
+            public HomeController(IModelRepository modelRepository)
             {
                 _modelRepository = modelRepository;
             }

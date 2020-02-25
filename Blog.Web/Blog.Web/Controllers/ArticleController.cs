@@ -1,8 +1,8 @@
 ﻿using Blog.Data.Entities.Const.Messages;
 using Blog.Data.Entities.Services.Interfaces;
 using Blog.Logic.Const.Messages;
+using Blog.Web.ModelRepository;
 using Blog.Web.Models.Article;
-using Blog.Web.Models.ModelRepository;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,10 +11,10 @@ namespace Blog.Web.Controllers
     public class ArticleController : Controller
     {
         private IArticleService _articleService;
-        private ModelRepository _modelRepository;
+        private IModelRepository _modelRepository;
         private ICommentService _commentService;
 
-        public ArticleController(IArticleService articleService, ModelRepository modelRepository, ICommentService commentService)
+        public ArticleController(IArticleService articleService, IModelRepository modelRepository, ICommentService commentService)
         {
 
             _articleService = articleService;

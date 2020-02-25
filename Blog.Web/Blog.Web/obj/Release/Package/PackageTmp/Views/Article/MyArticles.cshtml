@@ -1,0 +1,39 @@
+﻿@model Blog.Web.Models.Article.UserArticleModel
+@{
+    ViewBag.Title = "MyArticles";
+}
+
+<div class="row">
+    <div class="col-10">
+        <h1>
+            My articles
+        </h1>
+    </div>
+    <div class="col-2">
+        @if (Model.User.CanWrite == 1)
+        {
+            <button class="btn">@Html.ActionLink("Write new article", "Create", "Article", new { userId = Session["userId"] }, null)</button>
+        }
+    </div>
+
+</div>
+
+@foreach (var article in Model.UserArticles)
+{
+    <div class="row">
+        <a href="@Url.Action( "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)">
+            <div class="col-md-7">
+                <img class="img-responsive rounded mb-3 mb-md-0" src="@article.Picture" alt="">
+            </div>
+            <div class="col-md-5">
+
+                <h3>@article.Title</h3>
+                <p>@Html.Raw(article.Intro)</p>
+                <p>@Html.ActionLink("Read more", "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)</p>
+
+            </div>
+        </a>
+    </div>
+
+    <hr>
+}

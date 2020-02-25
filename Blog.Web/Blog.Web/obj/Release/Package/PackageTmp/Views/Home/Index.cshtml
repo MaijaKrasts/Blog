@@ -1,0 +1,87 @@
+﻿@model Blog.Web.Models.Article.MultipleArticleModel
+@{
+    ViewBag.Title = "Home Page";
+}
+<h1 class="my-4">
+    Editors choice
+</h1>
+
+<div class="row">
+    <a href="@Url.Action( "Single", "Article", new { articleId = Model.LatestArticle.Id, userId = Session["userId"] }, null)">
+        <div class="col-md-8">
+            <img class="img-responsive" src="@Model.LatestArticle.Picture" alt="">
+        </div>
+        <div class="col-md-4">
+
+            <h3>@Model.LatestArticle.Title</h3>
+            <p>@Html.Raw(Model.LatestArticle.Intro)</p>
+            <p>@Html.ActionLink("Read more", "Single", "Article", new { articleId = Model.LatestArticle.Id, userId = Session["userId"] }, null)</p>
+    </a>
+</div>
+</div>
+
+<br />
+<br />
+<div class="row">
+    @foreach (var article in Model.FewArticles)
+    {
+    <div class="col-md-3 col-sm-6 mb-4">
+        <a href="@Url.Action( "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)">
+            <img class="img-responsive" src="@article.Picture" alt="">
+            <h5>
+                @Html.ActionLink(article.Title, "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)
+            </h5>
+        </a>
+    </div>
+    }
+</div>
+
+<!-- /.row -->
+<!-- top rated & last commented -->
+<div class="row">
+    <div class="col-md-6 col-sm-6 mb-auto">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 mb-auto">
+                <h3 class="my-4">
+                    Top rated articles
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var article in Model.HighestRated)
+            {
+            <div class="col-md-4 col-sm-4 mb-auto">
+                <a href="@Url.Action( "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)">
+                    <img class="img-responsive" src="@article.Picture" alt="">
+                    <h6>
+                        @Html.ActionLink(article.Title, "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)
+                    </h6>
+                    <p><small>Article rating: @article.Rating</small></p>
+                </a>
+            </div>
+            }
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 mb-auto">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 mb-auto">
+                <h3 class="my-4">
+                    Latest comented
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var article in Model.LastCommented)
+            {
+            <div class="col-md-4 col-sm-4 mb-auto">
+                <a href="@Url.Action( "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)">
+                    <img class="img-responsive" src="@article.Picture" alt="">
+                    <h6>
+                        @Html.ActionLink(article.Title, "Single", "Article", new { articleId = article.Id, userId = Session["userId"] }, null)
+                    </h6>
+                </a>
+            </div>
+            }
+        </div>
+    </div>
+</div>

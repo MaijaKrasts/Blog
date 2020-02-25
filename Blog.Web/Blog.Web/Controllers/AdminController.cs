@@ -1,16 +1,16 @@
 ﻿using Blog.Data.Entities.Const.Messages;
 using Blog.Data.Entities.Services.Interfaces;
-using Blog.Web.Models.ModelRepository;
+using Blog.Web.ModelRepository;
 using System.Web.Mvc;
 
 namespace Blog.Web.Controllers
 {
     public class AdminController : Controller
     {
-        private ModelRepository _modelRepository;
+        private IModelRepository _modelRepository;
         private IUserService _userService;
 
-        public AdminController(ModelRepository modelRepository, IUserService userService)
+        public AdminController(IModelRepository modelRepository, IUserService userService)
         {
             _userService = userService;
             _modelRepository = modelRepository;
